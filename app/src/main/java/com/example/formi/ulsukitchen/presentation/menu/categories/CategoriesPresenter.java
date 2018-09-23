@@ -23,10 +23,10 @@ public class CategoriesPresenter extends MvpPresenter<CategoriesView> {
     public void navigateToEatFragment(String id) {
         Bundle args = new Bundle();
         args.putString(Constants.BundleKeys.ID_KEY, id);
-        App.getLocalRouter().navigateTo(Screen.EAT.name(), args);
+        App.getGlobalRouter().navigateTo(Screen.EAT.name(), args);
     }
 
     public void onBackButtonPressed() {
-        App.getLocalRouter().exit();
+        App.getGlobalRouter().exit();
     }
 }

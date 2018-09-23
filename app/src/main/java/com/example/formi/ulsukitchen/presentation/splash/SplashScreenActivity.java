@@ -2,6 +2,9 @@ package com.example.formi.ulsukitchen.presentation.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 

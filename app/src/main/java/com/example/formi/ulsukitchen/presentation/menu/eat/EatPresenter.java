@@ -18,6 +18,6 @@ public class EatPresenter extends MvpPresenter<EatView> {
     }
 
     public void onBackButtonPressed() {
-        App.getLocalRouter().exit();
+        App.getGlobalRouter().exit();
     }
 }
