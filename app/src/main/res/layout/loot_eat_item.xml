@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="3dp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgLootEatPhoto"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_launcher_background"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <TextView
+            android:id="@+id/txtLootEatPrice"
+            android:textColor="@android:color/black"
+            tools:text="219"
+            android:layout_below="@+id/imgLootEatPhoto"
+            android:layout_marginStart="16dp"
+            android:layout_toStartOf="@+id/txtRub"
+            android:layout_marginBottom="16dp"
+            android:textSize="24sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txtRub"
+            android:text="@string/rubles"
+            android:textSize="24sp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@+id/txtLootEatPrice"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/btnShowDescription"
+            android:layout_width="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/ic_description"
+            android:layout_below="@+id/imgLootEatPhoto"
+            android:layout_toStartOf="@+id/txtLootEatPrice"
+            android:layout_height="wrap_content"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/txtLootEatTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_toStartOf="@+id/btnShowDescription"
+            android:layout_marginStart="16dp"
+            android:layout_below="@+id/imgLootEatPhoto"
+            android:layout_alignBaseline="@+id/txtRub"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            tools:text="суп" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

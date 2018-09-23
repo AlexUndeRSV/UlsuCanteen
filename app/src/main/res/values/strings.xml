@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">UlsuKitchen</string>
+    <string name="main_page">Главная</string>
+    <string name="menu_page">Меню</string>
+    <string name="loot_box_page">Корзина</string>
+    <string name="go_to_pay">Перейти к оплате</string>
+    <string name="pay">Оплатить заказ</string>
+    <string name="rubles">руб.</string>
+    <string name="add_to_loot">в корзину</string>
+    <string name="close">закрыть</string>
+    <string name="price">Цена:</string>
+    <string name="add">Добавить</string>
+</resources>
