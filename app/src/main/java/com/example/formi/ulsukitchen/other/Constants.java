@@ -80,5 +80,7 @@ public class Constants {
     public static class BundleKeys{
         public static final String ID_KEY = "id_key";
         public static final String EAT_KEY = "eat_key";
+        public static final String CONTAINER_NAME_KEY = "container_name_key";
+        public static final String TITLE_KEY = "title_key";
     }
 }

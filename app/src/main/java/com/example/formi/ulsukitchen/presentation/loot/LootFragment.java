@@ -12,19 +12,21 @@ import android.widget.Button;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.example.formi.ulsukitchen.other.utils.TitleProvider;
 import com.example.formi.ulsukitchen.R;
 import com.example.formi.ulsukitchen.domain.dataclass.Eat;
+import com.example.formi.ulsukitchen.other.events.TitleEvent;
 import com.example.formi.ulsukitchen.other.itemdecorators.LinearItemDecorator;
 import com.example.formi.ulsukitchen.other.events.ShowBottomNavigationEvent;
-import com.example.formi.ulsukitchen.presentation.gcontainer.ContainerActivity;
 import com.example.formi.ulsukitchen.presentation.loot.adapter.LootAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-public class LootFragment extends MvpAppCompatFragment implements LootView {
+public class LootFragment extends MvpAppCompatFragment implements LootView, TitleProvider {
     public static final String TAG = "LootFragment";
+    private final String TITLE = "Корзина";
     @InjectPresenter
     LootPresenter presenter;
 
@@ -42,9 +44,15 @@ public class LootFragment extends MvpAppCompatFragment implements LootView {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+    public void onStart() {
+        super.onStart();
+        presenter.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        presenter.onStop();
     }
 
     @Override
@@ -78,9 +86,7 @@ public class LootFragment extends MvpAppCompatFragment implements LootView {
         adapter = new LootAdapter(getActivity());
         recView.setAdapter(adapter);
 
-        EventBus.getDefault().post(new ShowBottomNavigationEvent());
-
-        presenter.getLootList();
+        presenter.showBNV();
 
         btnGoToPay = view.findViewById(R.id.btnGoToPay);
         btnGoToPay.setOnClickListener((v) -> presenter.goToPay());
@@ -100,8 +106,7 @@ public class LootFragment extends MvpAppCompatFragment implements LootView {
     @Override
     public void onResume() {
         super.onResume();
-
-        ((ContainerActivity) getActivity()).setActionBarTitle("Корзина");
+        presenter.setTitle(TITLE);
     }
 
     @Override
@@ -109,5 +114,10 @@ public class LootFragment extends MvpAppCompatFragment implements LootView {
         this.eatList = eatList;
         adapter.setEatList(eatList);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public String getTitle() {
+        return TITLE;
     }
 }

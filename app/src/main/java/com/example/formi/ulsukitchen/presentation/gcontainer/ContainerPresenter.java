@@ -9,6 +9,7 @@ import com.example.formi.ulsukitchen.other.events.HideLoaderEvent;
 import com.example.formi.ulsukitchen.other.events.ShowBottomNavigationEvent;
 import com.example.formi.ulsukitchen.other.events.ShowLoaderEvent;
 import com.example.formi.ulsukitchen.other.events.ShowMessageEvent;
+import com.example.formi.ulsukitchen.other.events.TitleEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,23 +50,17 @@ public class ContainerPresenter extends MvpPresenter<ContainerView> {
         getViewState().showMessage(event.message);
     }
 
-    public void setRootScreen() {
-        App.getGlobalRouter().newRootScreen(Screen.MAIN.name());
+    @Subscribe
+    public void onSetTitle(TitleEvent event){
+        getViewState().setActionbarTitle(event.title);
     }
 
-    public void navigateToMenu() {
-        App.getGlobalRouter().newRootScreen(Screen.MENU.name());
-    }
-
-    public void navigateToMain() {
-        App.getGlobalRouter().newRootScreen(Screen.MAIN.name());
-    }
-
-    public void navigateToLoot(){
-        App.getGlobalRouter().newRootScreen(Screen.LOOT.name());
-    }
 
     public void onBackPressed() {
         App.getGlobalRouter().exit();
+    }
+
+    public void setDefaultTitle(String title) {
+        EventBus.getDefault().post(new TitleEvent(title));
     }
 }

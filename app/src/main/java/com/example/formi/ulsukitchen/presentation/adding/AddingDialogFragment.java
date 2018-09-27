@@ -1,8 +1,7 @@
-package com.example.formi.ulsukitchen.data.presentation.adding;
+package com.example.formi.ulsukitchen.presentation.adding;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +16,7 @@ import com.example.formi.ulsukitchen.R;
 import com.example.formi.ulsukitchen.domain.dataclass.Eat;
 import com.example.formi.ulsukitchen.other.Constants;
 import com.example.formi.ulsukitchen.other.events.HideLoaderEvent;
+import com.example.formi.ulsukitchen.other.events.NewItemInLootEvent;
 import com.example.formi.ulsukitchen.other.events.ShowLoaderEvent;
 import com.example.formi.ulsukitchen.other.events.ShowMessageEvent;
 
@@ -146,16 +146,18 @@ public class AddingDialogFragment extends DialogFragment implements AddingDialog
         txtPrice.setText(String.valueOf(totalPrice));
     }
 
-    public void eatAdded(String title, String count) {
+    @Override
+    public void notifyEatAdded(String title, String count) {
         dismiss();
         EventBus.getDefault().post(new ShowMessageEvent(title + " добавлен(а) в корзину (x" + count + ")"));
     }
 
-    public void addToLoot(Eat eat, int count) {
+    private void addToLoot(Eat eat, int count){
         EventBus.getDefault().post(new ShowLoaderEvent());
         eat.count = String.valueOf(count);
         App.getDBRepository().addEatToLoot(eat);
-        eatAdded(eat.title, String.valueOf(count));
+        EventBus.getDefault().post(new NewItemInLootEvent());
+        notifyEatAdded(eat.title, String.valueOf(count));
         EventBus.getDefault().post(new HideLoaderEvent());
     }
 }

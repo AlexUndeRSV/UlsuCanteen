@@ -8,4 +8,5 @@ public interface ContainerView extends MvpView {
     void showMessage(String str);
     void hideBottomNavigation();
     void showBottomNavigation();
+    void setActionbarTitle(String title);
 }

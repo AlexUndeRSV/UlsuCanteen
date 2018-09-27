@@ -13,18 +13,22 @@ import android.widget.Toast;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.formi.ulsukitchen.App;
-import com.example.formi.ulsukitchen.BackButtonListener;
+import com.example.formi.ulsukitchen.other.utils.BackButtonListener;
+import com.example.formi.ulsukitchen.other.utils.TitleProvider;
 import com.example.formi.ulsukitchen.R;
+import com.example.formi.ulsukitchen.other.utils.RouterProvider;
 import com.example.formi.ulsukitchen.other.Screen;
+import com.example.formi.ulsukitchen.other.events.TitleEvent;
 import com.example.formi.ulsukitchen.other.router.CustomNavigator;
-import com.example.formi.ulsukitchen.presentation.loot.LootFragment;
-import com.example.formi.ulsukitchen.presentation.main.MainFragment;
-import com.example.formi.ulsukitchen.presentation.menu.categories.CategoriesFragment;
-import com.example.formi.ulsukitchen.presentation.menu.lcontainer.MenuContainerFragment;
+import com.example.formi.ulsukitchen.presentation.tabcontainer.TabContainerFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-public class ContainerActivity extends MvpAppCompatActivity implements ContainerView {
+import ru.terrakok.cicerone.Router;
+
+public class ContainerActivity extends MvpAppCompatActivity implements ContainerView, RouterProvider {
 
     @InjectPresenter
     ContainerPresenter presenter;
@@ -34,45 +38,35 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
     private BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
 
-    private int currentPageId = -1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container);
 
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(v -> presenter.onBackPressed());
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            if (currentPageId == item.getItemId()) {
-                return false;
-            }
             switch (item.getItemId()) {
                 case R.id.item_main:
-//                    presenter.navigateToMain();
                     selectTab("MAIN");
-                    currentPageId = item.getItemId();
                     break;
                 case R.id.item_menu:
                     selectTab("MENU");
-//                    presenter.navigateToMenu();
-                    currentPageId = item.getItemId();
                     break;
                 case R.id.item_loot:
                     selectTab("LOOT");
-//                    presenter.navigateToLoot();
-                    currentPageId = item.getItemId();
                     break;
             }
             return true;
         });
+        bottomNavigationView.setSelectedItemId(R.id.item_main);
 
         loader = findViewById(R.id.pre_loader);
 
         App.getGlobalNavigatorHolder().setNavigator(navigator);
-        presenter.setRootScreen();
+        presenter.setDefaultTitle("Главная");
     }
 
     private void selectTab(String tab) {
@@ -89,21 +83,12 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
         }
         Fragment newFragment = fm.findFragmentByTag(tab);
 
-        if (currentFragment != null && newFragment != null && currentFragment == newFragment) return;
+        if (currentFragment != null && newFragment != null && currentFragment == newFragment)
+            return;
 
         FragmentTransaction transaction = fm.beginTransaction();
         if (newFragment == null) {
-            switch (tab){
-                case "MAIN":
-                    transaction.add(R.id.fragment_container, new MainFragment(), tab);
-                    break;
-                case "MENU":
-                    transaction.add(R.id.fragment_container, new CategoriesFragment(), tab);
-                    break;
-                case "LOOT":
-                    transaction.add(R.id.fragment_container, new LootFragment(), tab);
-                    break;
-            }
+            transaction.add(R.id.fragment_container, TabContainerFragment.newInstance(tab), tab);
         }
 
         if (currentFragment != null) {
@@ -111,6 +96,7 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
         }
 
         if (newFragment != null) {
+            toolbar.setTitle(((TitleProvider)newFragment).getTitle());
             transaction.show(newFragment);
         }
         transaction.commitNow();
@@ -156,9 +142,7 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
-        // TODO отладить навигацию с помощью cicerone (см. 'sample app')
-        // TODO откорректировать работу onBackPressed()
+        // TODO Подправить Clean Architecture
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = null;
@@ -173,22 +157,12 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
             }
         }
 
-        if (fragment != null) {
-            if (getSupportFragmentManager().getBackStackEntryCount() == 1 && fragment.getChildFragmentManager().getBackStackEntryCount() == 1) {
-                finish();
-            }
-        }
-
         if (fragment != null
                 && fragment instanceof BackButtonListener
                 && ((BackButtonListener) fragment).onBackPressed()) {
             return;
         } else {
             presenter.onBackPressed();
-        }
-
-        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-            finish();
         }
     }
 
@@ -198,21 +172,16 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
         App.getGlobalNavigatorHolder().removeNavigator();
     }
 
-    public void setActionBarTitle(String title) {
-        toolbar.setTitle(title);
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
-
         presenter.onStart();
     }
 
     @Override
     protected void onStop() {
-        presenter.onStop();
         super.onStop();
+        presenter.onStop();
     }
 
     @Override
@@ -243,5 +212,14 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
         bottomNavigationView.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void setActionbarTitle(String title) {
+        toolbar.setTitle(title);
+    }
 
+
+    @Override
+    public Router getRouter() {
+        return App.getGlobalRouter();
+    }
 }

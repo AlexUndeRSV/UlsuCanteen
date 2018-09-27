@@ -20,7 +20,7 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
     public interface OnCategoryClickListener{
-        void onCategoryClick(String id);
+        void onCategoryClick(String id, String title);
     }
 
     private OnCategoryClickListener onCategoryClickListener;
@@ -77,7 +77,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                     int position = getAdapterPosition();
                     if(position != RecyclerView.NO_POSITION) {
                         Category category = categoryList.get(position);
-                        onCategoryClickListener.onCategoryClick(category.id);
+                        onCategoryClickListener.onCategoryClick(category.id, category.title);
                     }
                 }
             });

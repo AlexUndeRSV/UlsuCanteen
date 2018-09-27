@@ -16,6 +16,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 
 public class PayFragment extends MvpAppCompatFragment implements PayView {
     public static final String TAG = "PayFragment";
+    private final String TITLE = "Оплата";
     @InjectPresenter
     PayPresenter presenter;
 
@@ -36,5 +37,11 @@ public class PayFragment extends MvpAppCompatFragment implements PayView {
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.setTitle(TITLE);
     }
 }

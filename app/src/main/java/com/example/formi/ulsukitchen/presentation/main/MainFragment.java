@@ -5,7 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.formi.ulsukitchen.presentation.gcontainer.ContainerActivity;
+import com.example.formi.ulsukitchen.other.utils.TitleProvider;
+import com.example.formi.ulsukitchen.other.events.TitleEvent;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 
@@ -13,8 +14,11 @@ import com.example.formi.ulsukitchen.R;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
-public class MainFragment extends MvpAppCompatFragment implements MainView {
+import org.greenrobot.eventbus.EventBus;
+
+public class MainFragment extends MvpAppCompatFragment implements MainView, TitleProvider {
     public static final String TAG = "MainFragment";
+    private final String TITLE = "Главная";
     @InjectPresenter
     MainPresenter presenter;
 
@@ -40,7 +44,11 @@ public class MainFragment extends MvpAppCompatFragment implements MainView {
     @Override
     public void onResume() {
         super.onResume();
+        presenter.setTitle(TITLE);
+    }
 
-        ((ContainerActivity)getActivity()).setActionBarTitle("Главная");
+    @Override
+    public String getTitle() {
+        return TITLE;
     }
 }

@@ -9,13 +9,18 @@ import android.view.ViewGroup;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.example.formi.ulsukitchen.BackButtonListener;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.example.formi.ulsukitchen.other.utils.BackButtonListener;
 import com.example.formi.ulsukitchen.R;
-import com.example.formi.ulsukitchen.data.presentation.adding.AddingDialogFragment;
+import com.example.formi.ulsukitchen.other.utils.RouterProvider;
+import com.example.formi.ulsukitchen.presentation.adding.AddingDialogFragment;
 import com.example.formi.ulsukitchen.domain.dataclass.Eat;
 import com.example.formi.ulsukitchen.other.Constants;
+import com.example.formi.ulsukitchen.other.events.TitleEvent;
 import com.example.formi.ulsukitchen.other.itemdecorators.LinearItemDecorator;
 import com.example.formi.ulsukitchen.presentation.menu.eat.adapter.EatAdapter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -24,12 +29,18 @@ public class EatFragment extends MvpAppCompatFragment implements EatView, EatAda
     @InjectPresenter
     EatPresenter presenter;
 
+    @ProvidePresenter
+    EatPresenter provideEatPresenter() {
+        return new EatPresenter(((RouterProvider) getParentFragment()).getRouter());
+    }
+
     private RecyclerView recView;
     private EatAdapter adapter;
 
     private List<Eat> eatList;
 
     private String id;
+    private String title = null;
 
     public static EatFragment newInstance(Bundle args) {
         EatFragment fragment = new EatFragment();
@@ -43,6 +54,17 @@ public class EatFragment extends MvpAppCompatFragment implements EatView, EatAda
         Bundle args = this.getArguments();
         if (args != null) {
             id = args.getString(Constants.BundleKeys.ID_KEY);
+            title = args.getString(Constants.BundleKeys.TITLE_KEY);
+        }
+        presenter.onCreate(id);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (title != null) {
+            presenter.setTitle(title);
         }
     }
 
@@ -64,8 +86,6 @@ public class EatFragment extends MvpAppCompatFragment implements EatView, EatAda
         adapter.setOnButtonAddClickListener(this);
 
         recView.setAdapter(adapter);
-
-        presenter.getEatListFromDB(id);
     }
 
     @Override

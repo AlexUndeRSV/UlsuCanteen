@@ -187,7 +187,7 @@ public abstract class CustomNavigator implements Navigator {
             }
         }
         str.append("]");
-        Log.d("Cicerone-ext","Screen chain:" + str.toString());
+        Log.d("Cicerone-ext", "Screen chain:" + str.toString());
     }
 
     public List<String> getScreenNames() {

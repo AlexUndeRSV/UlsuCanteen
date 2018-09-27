@@ -3,6 +3,7 @@ package com.example.formi.ulsukitchen;
 import android.app.Application;
 
 import com.example.formi.ulsukitchen.data.repositories.DBRepository;
+import com.example.formi.ulsukitchen.other.cicerone.LocalCiceroneHolder;
 
 import ru.terrakok.cicerone.Cicerone;
 import ru.terrakok.cicerone.NavigatorHolder;
@@ -13,25 +14,19 @@ public class App extends Application {
     public static App INSTANCE;
 
     private Cicerone<Router> ciceroneGlobal;
-    private Cicerone<Router> ciceroneLocal;
 
+    private LocalCiceroneHolder ciceroneHolder;
 
-    //----------------SharedPrefRep--------------------------------
-    /*private SharedPrefRepository sharedPrefRepository;
-
-    public static SharedPrefRepository getSharPref(){
-        return INSTANCE.sharedPrefRepository;
-    }*/
-    //----------------SharedPrefRep--------------------------------
-
-    //----------------ciceroneGlobal-------------------------------------
     @Override
     public void onCreate() {
         super.onCreate();
-//        sharedPrefRepository = new SharedPrefRepository(getApplicationContext());
         INSTANCE = this;
         ciceroneGlobal = Cicerone.create();
-        ciceroneLocal = Cicerone.create();
+        ciceroneHolder = new LocalCiceroneHolder();
+    }
+
+    public static LocalCiceroneHolder getCiceroneHolder(){
+        return INSTANCE.ciceroneHolder;
     }
 
     public static NavigatorHolder getGlobalNavigatorHolder() {
@@ -41,22 +36,6 @@ public class App extends Application {
     public static Router getGlobalRouter() {
         return INSTANCE.ciceroneGlobal.getRouter();
     }
-
-    public static NavigatorHolder getLocalNavigatorHolder() {
-        return INSTANCE.ciceroneLocal.getNavigatorHolder();
-    }
-
-    public static Router getLocalRouter() {
-        return INSTANCE.ciceroneLocal.getRouter();
-    }
-    //---------------ciceroneGlobal--------------------------------------
-
-    //-----------------------------------------------------
-
-    /*final private NetworkService networkService = new NetworkService();
-    public static NetworkService getNetworkService() {
-        return INSTANCE.networkService;
-    }*/
 
     final private DBRepository dbRepository = new DBRepository(this);
     public static DBRepository getDBRepository() {

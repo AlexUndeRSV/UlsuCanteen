@@ -10,24 +10,28 @@ import android.view.ViewGroup;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.example.formi.ulsukitchen.BackButtonListener;
+import com.example.formi.ulsukitchen.other.utils.TitleProvider;
 import com.example.formi.ulsukitchen.R;
+import com.example.formi.ulsukitchen.other.utils.RouterProvider;
 import com.example.formi.ulsukitchen.domain.dataclass.Category;
+import com.example.formi.ulsukitchen.other.events.TitleEvent;
 import com.example.formi.ulsukitchen.other.itemdecorators.GridItemDecorator;
-import com.example.formi.ulsukitchen.presentation.gcontainer.ContainerActivity;
 import com.example.formi.ulsukitchen.presentation.menu.categories.adapter.CategoryAdapter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-public class CategoriesFragment extends MvpAppCompatFragment implements CategoriesView, CategoryAdapter.OnCategoryClickListener, BackButtonListener {
+public class CategoriesFragment extends MvpAppCompatFragment implements CategoriesView, CategoryAdapter.OnCategoryClickListener, TitleProvider {
     public static final String TAG = "CategoriesFragment";
+    private final String TITLE = "Меню";
     @InjectPresenter
     CategoriesPresenter presenter;
 
-   /* @ProvidePresenter
+    @ProvidePresenter
     CategoriesPresenter provideCategoriesPresenter() {
         return new CategoriesPresenter(((RouterProvider) getParentFragment()).getRouter());
-    }*/
+    }
 
     private RecyclerView recView;
     private CategoryAdapter adapter;
@@ -97,8 +101,7 @@ public class CategoriesFragment extends MvpAppCompatFragment implements Categori
     @Override
     public void onResume() {
         super.onResume();
-
-        ((ContainerActivity) getActivity()).setActionBarTitle("Меню");
+        presenter.setTitle(TITLE);
     }
 
 
@@ -109,14 +112,12 @@ public class CategoriesFragment extends MvpAppCompatFragment implements Categori
     }
 
     @Override
-    public void onCategoryClick(String id) {
-        presenter.navigateToEatFragment(id);
+    public void onCategoryClick(String id, String title) {
+        presenter.navigateToEatFragment(id, title);
     }
 
-
     @Override
-    public boolean onBackPressed() {
-        presenter.onBackButtonPressed();
-        return true;
+    public String getTitle() {
+        return TITLE;
     }
 }
