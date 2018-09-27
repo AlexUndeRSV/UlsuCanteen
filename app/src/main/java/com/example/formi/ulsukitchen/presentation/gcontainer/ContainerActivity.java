@@ -217,6 +217,11 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
         toolbar.setTitle(title);
     }
 
+    @Override
+    public void selectItem(int itemId) {
+        bottomNavigationView.setSelectedItemId(itemId);
+    }
+
 
     @Override
     public Router getRouter() {

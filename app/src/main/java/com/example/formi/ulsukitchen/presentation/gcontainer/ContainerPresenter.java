@@ -6,6 +6,7 @@ import com.example.formi.ulsukitchen.App;
 import com.example.formi.ulsukitchen.other.Screen;
 import com.example.formi.ulsukitchen.other.events.HideBottomNavigationEvent;
 import com.example.formi.ulsukitchen.other.events.HideLoaderEvent;
+import com.example.formi.ulsukitchen.other.events.SelectItemEvent;
 import com.example.formi.ulsukitchen.other.events.ShowBottomNavigationEvent;
 import com.example.formi.ulsukitchen.other.events.ShowLoaderEvent;
 import com.example.formi.ulsukitchen.other.events.ShowMessageEvent;
@@ -55,6 +56,10 @@ public class ContainerPresenter extends MvpPresenter<ContainerView> {
         getViewState().setActionbarTitle(event.title);
     }
 
+    @Subscribe
+    public void onSelectBNVItem(SelectItemEvent event){
+        getViewState().selectItem(event.itemId);
+    }
 
     public void onBackPressed() {
         App.getGlobalRouter().exit();

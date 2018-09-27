@@ -9,4 +9,5 @@ public interface ContainerView extends MvpView {
     void hideBottomNavigation();
     void showBottomNavigation();
     void setActionbarTitle(String title);
+    void selectItem(int itemId);
 }

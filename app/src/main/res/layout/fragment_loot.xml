@@ -5,6 +5,45 @@
     android:layout_height="match_parent"
     tools:context=".presentation.loot.LootFragment">
 
+    <RelativeLayout
+        android:id="@+id/empty_loot"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgLootBuf"
+            android:src="@drawable/ic_loot"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txtEmptyLoot"
+            android:layout_marginTop="8dp"
+            android:text="@string/empty_loot"
+            android:layout_below="@+id/imgLootBuf"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="@string/add"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorPrimary"
+            android:clickable="true"
+            android:textSize="16sp"
+            android:layout_below="@+id/txtEmptyLoot"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/txtAddToLoot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true" />
+
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recViewLoot"
         android:layout_width="match_parent"

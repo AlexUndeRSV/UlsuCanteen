@@ -4,11 +4,13 @@ package com.example.formi.ulsukitchen.presentation.loot;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.example.formi.ulsukitchen.App;
+import com.example.formi.ulsukitchen.R;
 import com.example.formi.ulsukitchen.domain.dataclass.Eat;
 import com.example.formi.ulsukitchen.other.Screen;
 import com.example.formi.ulsukitchen.other.events.HideBottomNavigationEvent;
 import com.example.formi.ulsukitchen.other.events.HideLoaderEvent;
 import com.example.formi.ulsukitchen.other.events.NewItemInLootEvent;
+import com.example.formi.ulsukitchen.other.events.SelectItemEvent;
 import com.example.formi.ulsukitchen.other.events.ShowBottomNavigationEvent;
 import com.example.formi.ulsukitchen.other.events.ShowLoaderEvent;
 import com.example.formi.ulsukitchen.other.events.TitleEvent;
@@ -65,4 +67,7 @@ public class LootPresenter extends MvpPresenter<LootView> {
         EventBus.getDefault().post(new TitleEvent(title));
     }
 
+    public void navigateToEat() {
+        EventBus.getDefault().post(new SelectItemEvent(R.id.item_menu));
+    }
 }
