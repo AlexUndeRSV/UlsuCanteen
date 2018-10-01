@@ -25,6 +25,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/empty_loot"
             android:layout_below="@+id/imgLootBuf"
+            android:textSize="24sp"
             android:textColor="@android:color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -34,7 +35,7 @@
             android:layout_marginTop="8dp"
             android:textColor="@color/colorPrimary"
             android:clickable="true"
-            android:textSize="16sp"
+            android:textSize="24sp"
             android:layout_below="@+id/txtEmptyLoot"
             android:layout_centerHorizontal="true"
             android:id="@+id/txtAddToLoot"

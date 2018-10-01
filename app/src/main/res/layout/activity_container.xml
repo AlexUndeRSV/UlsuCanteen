@@ -11,45 +11,43 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        app:titleTextColor="@android:color/white"
         app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
-        app:title="@string/app_name"/>
+        app:title="@string/app_name"
+        app:titleTextColor="@android:color/white"/>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
+        android:layout_below="@id/toolbar"
         android:id="@+id/fragment_container"
-        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_above="@+id/bottomNav"
         android:layout_height="match_parent"
-        tools:context=".presentation.gcontainer.ContainerActivity" />
+        android:layout_above="@+id/bottomNav" />
 
 
     <FrameLayout
         android:id="@+id/pre_loader"
         android:layout_width="match_parent"
-        android:clickable="true"
-        android:visibility="gone"
+        android:layout_height="match_parent"
         android:background="#8981807c"
+        android:clickable="true"
         android:focusable="true"
-        android:layout_height="match_parent">
+        android:visibility="gone">
 
         <ProgressBar
             style="@android:style/Widget.DeviceDefault.ProgressBar.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
 
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNav"
-        app:elevation="8dp"
-        android:elevation="8dp"
-        android:background="@android:color/white"
-        app:menu="@menu/bottom_nav"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        android:elevation="8dp"
+        app:elevation="8dp"
+        app:menu="@menu/bottom_nav" />
 
 </RelativeLayout>

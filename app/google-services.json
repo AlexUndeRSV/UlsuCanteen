@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1062454185884",
+    "firebase_url": "https://ulsu-canteen.firebaseio.com",
+    "project_id": "ulsu-canteen",
+    "storage_bucket": "ulsu-canteen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062454185884:android:7f58d1413408c8e4",
+        "android_client_info": {
+          "package_name": "com.lynx.formi.ulsucanteen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062454185884-irhft3caokafcinkqmh58p9l2gou2qht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzz0D9vF5AI0knfHEGCLjPaYWi2fhLyZ8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
