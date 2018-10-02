@@ -9,6 +9,7 @@ import com.lynx.formi.ulsucanteen.domain.dataclass.Eat;
 import com.lynx.formi.ulsucanteen.other.Screen;
 import com.lynx.formi.ulsucanteen.other.events.HideBottomNavigationEvent;
 import com.lynx.formi.ulsucanteen.other.events.HideLoaderEvent;
+import com.lynx.formi.ulsucanteen.other.events.HideToolbarIcon;
 import com.lynx.formi.ulsucanteen.other.events.NewItemInLootEvent;
 import com.lynx.formi.ulsucanteen.other.events.SelectItemEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowBottomNavigationEvent;
@@ -77,5 +78,9 @@ public class LootPresenter extends MvpPresenter<LootView> {
 
     public void navigateToEat() {
         EventBus.getDefault().post(new SelectItemEvent(R.id.item_menu));
+    }
+
+    public void hideToolbarIcon() {
+        EventBus.getDefault().post(new HideToolbarIcon());
     }
 }

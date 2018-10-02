@@ -61,6 +61,7 @@ public class EatFragment extends MvpAppCompatFragment implements EatView, EatAda
         super.onResume();
 
         presenter.setTitle(title);
+        presenter.showToolbarIcon();
     }
 
     @Override

@@ -39,6 +39,7 @@ public class MainFragment extends MvpAppCompatFragment implements MainView, Titl
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        presenter.hideToolbarIcon();
     }
 
     @Override

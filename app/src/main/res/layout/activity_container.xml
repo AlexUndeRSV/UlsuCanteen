@@ -28,6 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#8981807c"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@+id/bottomNav"
         android:clickable="true"
         android:focusable="true"
         android:visibility="gone">

@@ -54,8 +54,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         Category category = categoryList.get(position);
 
-        holder.txtTitle.setText(category.title);
-        Glide.with(ctx).load(category.imgUrl).into(holder.imgPhoto);
+        holder.txtTitle.setText(category.getTitle());
+        Glide.with(ctx).load(category.getImgUrl()).into(holder.imgPhoto);
 //        Picasso.with(ctx).load(category.imgUrl).into(holder.imgPhoto);
     }
 
@@ -80,7 +80,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                     int position = getAdapterPosition();
                     if(position != RecyclerView.NO_POSITION) {
                         Category category = categoryList.get(position);
-                        onCategoryClickListener.onCategoryClick(category.id, category.title);
+                        onCategoryClickListener.onCategoryClick(category.getId(), category.getTitle());
                     }
                 }
             });

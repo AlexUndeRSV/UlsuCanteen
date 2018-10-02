@@ -118,6 +118,7 @@ public class LootFragment extends MvpAppCompatFragment implements LootView, Titl
         recView.setAdapter(adapter);
 
         presenter.showBNV();
+        presenter.hideToolbarIcon();
 
         btnGoToPay = view.findViewById(R.id.btnGoToPay);
         btnGoToPay.setOnClickListener((v) -> presenter.goToPay());

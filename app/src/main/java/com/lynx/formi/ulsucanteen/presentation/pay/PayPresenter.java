@@ -1,6 +1,7 @@
 package com.lynx.formi.ulsucanteen.presentation.pay;
 
 
+import com.lynx.formi.ulsucanteen.other.events.ShowToolbarIcon;
 import com.lynx.formi.ulsucanteen.other.events.TitleEvent;
 import com.lynx.formi.ulsucanteen.presentation.pay.PayView;
 import com.arellomobile.mvp.InjectViewState;
@@ -27,4 +28,7 @@ public class PayPresenter extends MvpPresenter<PayView> {
         router.exit();
     }
 
+    public void showToolbarIcon() {
+        EventBus.getDefault().post(new ShowToolbarIcon());
+    }
 }

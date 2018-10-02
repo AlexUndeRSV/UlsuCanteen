@@ -5,12 +5,14 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.lynx.formi.ulsucanteen.App;
 import com.lynx.formi.ulsucanteen.other.events.HideBottomNavigationEvent;
 import com.lynx.formi.ulsucanteen.other.events.HideLoaderEvent;
+import com.lynx.formi.ulsucanteen.other.events.HideToolbarIcon;
 import com.lynx.formi.ulsucanteen.other.events.SelectItemEvent;
 import com.lynx.formi.ulsucanteen.other.events.HideToolbarEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowBottomNavigationEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowLoaderEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowMessageEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowToolbarEvent;
+import com.lynx.formi.ulsucanteen.other.events.ShowToolbarIcon;
 import com.lynx.formi.ulsucanteen.other.events.TitleEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -70,6 +72,16 @@ public class ContainerPresenter extends MvpPresenter<ContainerView> {
     @Subscribe
     public void onShowToolbar(ShowToolbarEvent event){
         getViewState().showBaseToolbar();
+    }
+
+    @Subscribe
+    public void onShowNavigationIcon(ShowToolbarIcon event){
+        getViewState().showNavigationIcon();
+    }
+
+    @Subscribe
+    public void onHideNavigationIcon(HideToolbarIcon event){
+        getViewState().hideNavigationIcon();
     }
 
     public void onBackPressed() {

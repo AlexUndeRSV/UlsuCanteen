@@ -13,6 +13,7 @@ import com.lynx.formi.ulsucanteen.other.events.HideLoaderEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowBottomNavigationEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowLoaderEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowToolbarEvent;
+import com.lynx.formi.ulsucanteen.other.events.ShowToolbarIcon;
 import com.lynx.formi.ulsucanteen.other.events.TitleEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -61,5 +62,9 @@ public class EatPresenter extends MvpPresenter<EatView> {
     public void showToolbarAndBNV() {
         EventBus.getDefault().post(new ShowBottomNavigationEvent());
         EventBus.getDefault().post(new ShowToolbarEvent());
+    }
+
+    public void showToolbarIcon() {
+        EventBus.getDefault().post(new ShowToolbarIcon());
     }
 }

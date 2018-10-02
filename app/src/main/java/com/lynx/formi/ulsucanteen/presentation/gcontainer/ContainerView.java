@@ -14,4 +14,6 @@ public interface ContainerView extends MvpView {
     void selectItem(int itemId);
     void hideBaseToolbar();
     void showBaseToolbar();
+    void showNavigationIcon();
+    void hideNavigationIcon();
 }

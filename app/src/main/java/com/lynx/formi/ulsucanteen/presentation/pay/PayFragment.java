@@ -50,6 +50,7 @@ public class PayFragment extends MvpAppCompatFragment implements PayView, BackBu
     public void onResume() {
         super.onResume();
         presenter.setTitle(TITLE);
+        presenter.showToolbarIcon();
     }
 
     @Override

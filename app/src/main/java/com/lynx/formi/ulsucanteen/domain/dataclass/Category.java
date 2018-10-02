@@ -3,10 +3,14 @@ package com.lynx.formi.ulsucanteen.domain.dataclass;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 public class Category implements Parcelable{
-    public String imgUrl;
-    public String title;
-    public String id;
+    private String imgUrl;
+    private String title;
+    private String id;
+
+    private List<Eat> food;
 
     public Category() {
     }
@@ -45,5 +49,37 @@ public class Category implements Parcelable{
         dest.writeString(imgUrl);
         dest.writeString(title);
         dest.writeString(id);
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<Eat> getFood() {
+        return food;
+    }
+
+    public void setFood(List<Eat> food) {
+        this.food = food;
     }
 }

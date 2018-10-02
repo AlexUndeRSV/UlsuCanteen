@@ -96,6 +96,11 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
         }
 
         if (newFragment != null) {
+            if (newFragment.getChildFragmentManager().getBackStackEntryCount() == 0) {
+                hideNavigationIcon();
+            } else {
+                showNavigationIcon();
+            }
             transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
             toolbar.setTitle(((TitleProvider) newFragment).getTitle());
             transaction.show(newFragment);
@@ -230,6 +235,16 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
     @Override
     public void showBaseToolbar() {
         toolbar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showNavigationIcon() {
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+    }
+
+    @Override
+    public void hideNavigationIcon() {
+        toolbar.setNavigationIcon(null);
     }
 
 
