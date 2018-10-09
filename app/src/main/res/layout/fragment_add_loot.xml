@@ -1,87 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:padding="16dp">
 
     <ImageButton
-        android:src="@drawable/ic_minus"
         android:id="@+id/btnCountMinus"
         android:layout_width="wrap_content"
-        android:padding="8dp"
+        android:layout_height="wrap_content"
         android:layout_toStartOf="@+id/txtEatCount"
-        android:background="@drawable/btn_style"
-        android:layout_height="wrap_content" />
+        android:background="@drawable/btn_style_enable"
+        android:padding="8dp"
+        android:src="@drawable/ic_minus" />
 
     <TextView
         android:id="@+id/txtEatCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        tools:text="3"
+        android:layout_margin="8dp"
+        android:layout_toStartOf="@+id/btnCountPlus"
+        android:maxLength="1"
         android:textColor="@android:color/black"
         android:textSize="26sp"
-        android:maxLength="1"
-        android:layout_toStartOf="@+id/btnCountPlus"
-        android:layout_margin="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        tools:text="3" />
 
 
     <ImageButton
-        android:src="@drawable/ic_plus"
-        android:padding="8dp"
-        android:layout_alignParentEnd="true"
         android:id="@+id/btnCountPlus"
-        android:background="@drawable/btn_style"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/btn_style_enable"
+        android:padding="8dp"
+        android:src="@drawable/ic_plus" />
 
     <TextView
         android:id="@+id/txtAddingEatPrice"
-        tools:text="2000"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        tools:text="2000" />
 
     <TextView
         android:id="@+id/txtPriceValuteInfo"
-        android:text="@string/rubles"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:layout_toEndOf="@+id/txtAddingEatPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_toEndOf="@+id/txtAddingEatPrice"
+        android:text="@string/rubles"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/btnCountPlus"
         android:layout_centerHorizontal="true"
-        android:layout_height="wrap_content">
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnCloseDialog"
-            android:background="@drawable/btn_style"
-            android:text="@string/close"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
+            style="@style/IncDecrButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:text="@string/close" />
 
         <Button
             android:id="@+id/btnAddToLoot"
+            style="@style/IncDecrButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_weight="1"
-            android:background="@drawable/btn_style"
-            android:text="@string/add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:background="@drawable/btn_style_enable"
+            android:text="@string/add" />
 
     </LinearLayout>
 

@@ -2,14 +2,11 @@ package com.lynx.formi.ulsucanteen.presentation.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.lynx.formi.ulsucanteen.presentation.gcontainer.ContainerActivity;
+import com.lynx.formi.ulsucanteen.presentation.container.ContainerActivity;
 
 public class SplashScreenActivity extends MvpAppCompatActivity implements SplashScreenView {
     public static final String TAG = "SplashScreenActivity";

@@ -1,14 +1,16 @@
-package com.lynx.formi.ulsucanteen.presentation.gcontainer;
+package com.lynx.formi.ulsucanteen.presentation.container;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.lynx.formi.ulsucanteen.App;
 import com.lynx.formi.ulsucanteen.other.events.HideBottomNavigationEvent;
+import com.lynx.formi.ulsucanteen.other.events.HideClearLootItemEvent;
 import com.lynx.formi.ulsucanteen.other.events.HideLoaderEvent;
 import com.lynx.formi.ulsucanteen.other.events.HideToolbarIcon;
 import com.lynx.formi.ulsucanteen.other.events.SelectItemEvent;
 import com.lynx.formi.ulsucanteen.other.events.HideToolbarEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowBottomNavigationEvent;
+import com.lynx.formi.ulsucanteen.other.events.ShowClearLootItemEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowLoaderEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowMessageEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowToolbarEvent;
@@ -82,6 +84,16 @@ public class ContainerPresenter extends MvpPresenter<ContainerView> {
     @Subscribe
     public void onHideNavigationIcon(HideToolbarIcon event){
         getViewState().hideNavigationIcon();
+    }
+
+    @Subscribe
+    public void onShowClearLootItem(ShowClearLootItemEvent event){
+        getViewState().showClearLootItem();
+    }
+
+    @Subscribe
+    public void onHideClearLootItem(HideClearLootItemEvent event){
+        getViewState().hideClearLootItem();
     }
 
     public void onBackPressed() {

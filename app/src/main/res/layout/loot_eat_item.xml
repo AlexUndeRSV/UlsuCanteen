@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardElevation="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     app:cardCornerRadius="3dp"
-    android:layout_height="wrap_content">
+    app:cardElevation="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,59 +13,97 @@
 
         <ImageView
             android:id="@+id/imgLootEatPhoto"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_margin="8dp"
-            android:src="@drawable/ic_launcher_background"
             android:scaleType="centerCrop"
-            android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:src="@drawable/ic_launcher_background" />
 
         <TextView
             android:id="@+id/txtLootEatPrice"
-            android:textColor="@android:color/black"
-            tools:text="219"
-            android:layout_below="@+id/imgLootEatPhoto"
-            android:layout_marginStart="16dp"
-            android:layout_toStartOf="@+id/txtRub"
-            android:layout_marginBottom="16dp"
-            android:textSize="24sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtLootEatTitle"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/imgLootEatPhoto"
+            android:textColor="@android:color/black"
+            android:textSize="32sp"
+            tools:text="219" />
 
         <TextView
             android:id="@+id/txtRub"
-            android:text="@string/rubles"
-            android:textSize="24sp"
-            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/txtLootEatPrice"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_toEndOf="@+id/txtLootEatPrice"
+            android:text="@string/rubles"
             android:textColor="@android:color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="24sp" />
 
-        <ImageView
-            android:id="@+id/btnShowDescription"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/countLayout"
             android:layout_width="wrap_content"
-            android:clickable="true"
-            android:src="@drawable/ic_description"
-            android:layout_below="@+id/imgLootEatPhoto"
-            android:layout_toStartOf="@+id/txtLootEatPrice"
             android:layout_height="wrap_content"
-            android:focusable="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/txtLootEatPrice"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp">
+
+            <ImageButton
+                android:id="@+id/btnLootCountMinus"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_toStartOf="@+id/txtLootEatCount"
+                android:background="@drawable/btn_style_enable"
+                android:padding="8dp"
+                android:src="@drawable/ic_minus"
+                app:layout_constraintDimensionRatio="1:1" />
+
+            <TextView
+                android:id="@+id/txtLootEatCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="1"
+                android:padding="8dp"
+                android:textColor="@android:color/black"
+                android:textSize="26sp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toEndOf="@id/btnLootCountMinus"
+                tools:text="3" />
+
+
+            <ImageButton
+                android:id="@+id/btnLootCountPlus"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/btn_style_enable"
+                android:padding="8dp"
+                android:src="@drawable/ic_plus"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toEndOf="@id/txtLootEatCount" />
+
+        </android.support.constraint.ConstraintLayout>
 
         <TextView
             android:id="@+id/txtLootEatTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1"
+            android:layout_alignParentTop="true"
+            android:layout_margin="8dp"
+            android:layout_toEndOf="@+id/imgLootEatPhoto"
             android:ellipsize="end"
-            android:layout_toStartOf="@+id/btnShowDescription"
-            android:layout_marginStart="16dp"
-            android:layout_below="@+id/imgLootEatPhoto"
-            android:layout_alignBaseline="@+id/txtRub"
+            android:maxLines="1"
             android:textColor="@android:color/black"
             android:textSize="24sp"
-            tools:text="суп" />
+            tools:text="Суп" />
 
     </RelativeLayout>
 

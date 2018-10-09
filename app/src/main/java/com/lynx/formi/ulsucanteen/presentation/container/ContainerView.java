@@ -1,6 +1,4 @@
-package com.lynx.formi.ulsucanteen.presentation.gcontainer;
-
-import android.support.v7.widget.Toolbar;
+package com.lynx.formi.ulsucanteen.presentation.container;
 
 import com.arellomobile.mvp.MvpView;
 
@@ -16,4 +14,6 @@ public interface ContainerView extends MvpView {
     void showBaseToolbar();
     void showNavigationIcon();
     void hideNavigationIcon();
+    void showClearLootItem();
+    void hideClearLootItem();
 }

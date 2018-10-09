@@ -12,7 +12,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.lynx.formi.ulsucanteen.App;
 import com.lynx.formi.ulsucanteen.domain.dataclass.Category;
-import com.lynx.formi.ulsucanteen.domain.dataclass.Eat;
+import com.lynx.formi.ulsucanteen.domain.dataclass.Food;
 import com.lynx.formi.ulsucanteen.other.Constants;
 import com.lynx.formi.ulsucanteen.other.Screen;
 import com.lynx.formi.ulsucanteen.other.events.HideBottomNavigationEvent;
@@ -35,11 +35,11 @@ public class CategoriesPresenter extends MvpPresenter<CategoriesView> {
 
     private Router router;
 
-    private List<Eat> eatList;
+    private List<Food> foodList;
 
     public CategoriesPresenter(Router router) {
         this.router = router;
-        eatList = new ArrayList<>();
+        foodList = new ArrayList<>();
     }
 
     @Override
@@ -67,16 +67,16 @@ public class CategoriesPresenter extends MvpPresenter<CategoriesView> {
         return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                eatList.clear();
+                foodList.clear();
                 GenericTypeIndicator<List<Category>> t = new GenericTypeIndicator<List<Category>>() {
                 };
                 List<Category> categoryList = dataSnapshot.getValue(t);
                 for (Category category : categoryList) {
                     if (category.getFood() != null) {
-                        eatList.addAll(category.getFood());
+                        foodList.addAll(category.getFood());
                     }
                 }
-                App.getDBRepository().saveEatList(eatList);
+                App.getDBRepository().saveFoodList(foodList);
                 getViewState().setCategories(categoryList);
                 EventBus.getDefault().post(new HideLoaderEvent());
                 EventBus.getDefault().post(new ShowBottomNavigationEvent());

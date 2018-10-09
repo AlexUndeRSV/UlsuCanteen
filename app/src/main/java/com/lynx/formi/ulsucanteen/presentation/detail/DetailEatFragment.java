@@ -15,7 +15,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.lynx.formi.ulsucanteen.App;
 import com.lynx.formi.ulsucanteen.R;
-import com.lynx.formi.ulsucanteen.domain.dataclass.Eat;
+import com.lynx.formi.ulsucanteen.domain.dataclass.Food;
 import com.lynx.formi.ulsucanteen.other.Constants;
 import com.lynx.formi.ulsucanteen.other.utils.BackButtonListener;
 import com.lynx.formi.ulsucanteen.other.utils.RouterProvider;
@@ -84,8 +84,8 @@ public class DetailEatFragment extends MvpAppCompatFragment implements DetailEat
 
     private void goToAdd() {
         Bundle args = new Bundle();
-        Eat eat = App.getDBRepository().getEatById(id);
-        args.putParcelable(Constants.BundleKeys.EAT_KEY, eat);
+        Food food = App.getDBRepository().getFoodById(id);
+        args.putParcelable(Constants.BundleKeys.EAT_KEY, food);
 
         AddingDialogFragment addingDialogFragment = AddingDialogFragment.newInstance(args);
         addingDialogFragment.setCancelable(false);

@@ -11,11 +11,12 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.lynx.formi.ulsucanteen.R;
-import com.lynx.formi.ulsucanteen.domain.dataclass.Eat;
+import com.lynx.formi.ulsucanteen.domain.dataclass.Food;
 import com.lynx.formi.ulsucanteen.other.Constants;
 import com.lynx.formi.ulsucanteen.other.itemdecorators.LinearItemDecorator;
 import com.lynx.formi.ulsucanteen.other.utils.BackButtonListener;
 import com.lynx.formi.ulsucanteen.other.utils.RouterProvider;
+import com.lynx.formi.ulsucanteen.other.utils.TitleProvider;
 import com.lynx.formi.ulsucanteen.presentation.adding.AddingDialogFragment;
 import com.lynx.formi.ulsucanteen.presentation.menu.eat.adapter.EatAdapter;
 
@@ -34,7 +35,7 @@ public class EatFragment extends MvpAppCompatFragment implements EatView, EatAda
     private RecyclerView recView;
     private EatAdapter adapter;
 
-    private List<Eat> eatList;
+    private List<Food> foodList;
 
     private String id;
     private String title = null;
@@ -87,17 +88,17 @@ public class EatFragment extends MvpAppCompatFragment implements EatView, EatAda
     }
 
     @Override
-    public void setEatList(List<Eat> eatList) {
-        this.eatList = eatList;
-        adapter.setEatList(eatList);
+    public void setFoodList(List<Food> foodList) {
+        this.foodList = foodList;
+        adapter.setFoodList(foodList);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onButtonAddClickListener(int position) {
         Bundle args = new Bundle();
-        Eat eat = eatList.get(position);
-        args.putParcelable(Constants.BundleKeys.EAT_KEY, eat);
+        Food food = foodList.get(position);
+        args.putParcelable(Constants.BundleKeys.EAT_KEY, food);
 
         AddingDialogFragment addingDialogFragment = AddingDialogFragment.newInstance(args);
         addingDialogFragment.setCancelable(false);
@@ -106,8 +107,8 @@ public class EatFragment extends MvpAppCompatFragment implements EatView, EatAda
 
     @Override
     public void onItemClickListener(int position) {
-        Eat eat = eatList.get(position);
-        presenter.navigateToDetail(eat.id);
+        Food food = foodList.get(position);
+        presenter.navigateToDetail(food.id);
     }
 
     @Override

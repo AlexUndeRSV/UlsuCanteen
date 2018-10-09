@@ -6,12 +6,9 @@ import android.os.Bundle;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.lynx.formi.ulsucanteen.App;
-import com.lynx.formi.ulsucanteen.domain.dataclass.Eat;
 import com.lynx.formi.ulsucanteen.other.Constants;
 import com.lynx.formi.ulsucanteen.other.Screen;
-import com.lynx.formi.ulsucanteen.other.events.HideLoaderEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowBottomNavigationEvent;
-import com.lynx.formi.ulsucanteen.other.events.ShowLoaderEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowToolbarEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowToolbarIcon;
 import com.lynx.formi.ulsucanteen.other.events.TitleEvent;
@@ -42,7 +39,7 @@ public class EatPresenter extends MvpPresenter<EatView> {
     }
 
     public void getEatListFromDB(String id) {
-        getViewState().setEatList(App.getDBRepository().getEatList(id));
+        getViewState().setFoodList(App.getDBRepository().getFoodList(id));
     }
 
     public void onBackButtonPressed() {

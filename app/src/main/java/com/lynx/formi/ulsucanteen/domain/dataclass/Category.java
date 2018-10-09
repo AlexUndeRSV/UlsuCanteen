@@ -10,7 +10,7 @@ public class Category implements Parcelable{
     private String title;
     private String id;
 
-    private List<Eat> food;
+    private List<Food> food;
 
     public Category() {
     }
@@ -75,11 +75,11 @@ public class Category implements Parcelable{
         this.id = id;
     }
 
-    public List<Eat> getFood() {
+    public List<Food> getFood() {
         return food;
     }
 
-    public void setFood(List<Eat> food) {
+    public void setFood(List<Food> food) {
         this.food = food;
     }
 }

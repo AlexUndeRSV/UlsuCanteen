@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.lynx.formi.ulsucanteen.App;
 import com.lynx.formi.ulsucanteen.R;
-import com.lynx.formi.ulsucanteen.domain.dataclass.Eat;
+import com.lynx.formi.ulsucanteen.domain.dataclass.Food;
 import com.lynx.formi.ulsucanteen.other.Constants;
 import com.lynx.formi.ulsucanteen.other.events.HideLoaderEvent;
 import com.lynx.formi.ulsucanteen.other.events.NewItemInLootEvent;
@@ -36,7 +36,7 @@ public class AddingDialogFragment extends DialogFragment implements AddingDialog
     private String title;
     private int singlePrice, totalPrice = 0;
 
-    private Eat eat;
+    private Food food;
 
     public static AddingDialogFragment newInstance(Bundle args) {
         AddingDialogFragment fragment = new AddingDialogFragment();
@@ -51,10 +51,10 @@ public class AddingDialogFragment extends DialogFragment implements AddingDialog
         if (getArguments() != null) {
             Bundle args = getArguments();
 
-            eat = args.getParcelable(Constants.BundleKeys.EAT_KEY);
+            food = args.getParcelable(Constants.BundleKeys.EAT_KEY);
 
-            title = eat.title;
-            singlePrice = Integer.parseInt(eat.price);
+            title = food.title;
+            singlePrice = Integer.parseInt(food.price);
         }
     }
 
@@ -83,7 +83,7 @@ public class AddingDialogFragment extends DialogFragment implements AddingDialog
         btnClose = view.findViewById(R.id.btnCloseDialog);
 
         btnClose.setOnClickListener((v) -> this.dismiss());
-        btnAddToLoot.setOnClickListener((v) -> addToLoot(eat, count));
+        btnAddToLoot.setOnClickListener((v) -> addToLoot(food, count));
 
         btnMinus.setBackgroundColor(getActivity().getResources().getColor(R.color.gray));
         btnMinus.setClickable(false);
@@ -152,12 +152,13 @@ public class AddingDialogFragment extends DialogFragment implements AddingDialog
         EventBus.getDefault().post(new ShowMessageEvent(title + " добавлен(а) в корзину (x" + count + ")"));
     }
 
-    private void addToLoot(Eat eat, int count){
+    // Presenter не успевает создаться
+    private void addToLoot(Food food, int count){
         EventBus.getDefault().post(new ShowLoaderEvent());
-        eat.count = String.valueOf(count);
-        App.getDBRepository().addEatToLoot(eat);
+        food.count = String.valueOf(count);
+        App.getDBRepository().addFoodToBucket(food);
         EventBus.getDefault().post(new NewItemInLootEvent());
-        notifyEatAdded(eat.title, String.valueOf(count));
+        notifyEatAdded(food.title, String.valueOf(count));
         EventBus.getDefault().post(new HideLoaderEvent());
     }
 }

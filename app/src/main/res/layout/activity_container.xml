@@ -4,32 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.gcontainer.ContainerActivity">
+    tools:context=".presentation.container.ContainerActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:elevation="8dp"
+        app:elevation="8dp"
         android:background="@color/colorPrimary"
         app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
         app:title="@string/app_name"
-        app:titleTextColor="@android:color/white"/>
+        app:titleTextColor="@android:color/white" />
 
     <FrameLayout
-        android:layout_below="@id/toolbar"
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomNav" />
+        android:layout_above="@+id/bottomNav"
+        android:layout_below="@id/toolbar" />
 
 
     <FrameLayout
         android:id="@+id/pre_loader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#8981807c"
-        android:layout_below="@id/toolbar"
         android:layout_above="@+id/bottomNav"
+        android:layout_below="@id/toolbar"
+        android:background="#ffffff"
         android:clickable="true"
         android:focusable="true"
         android:visibility="gone">
@@ -37,6 +39,8 @@
         <ProgressBar
             style="@android:style/Widget.DeviceDefault.ProgressBar.Large"
             android:layout_width="wrap_content"
+            android:indeterminateTint="@color/colorPrimary"
+            android:indeterminateTintMode="src_in"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 

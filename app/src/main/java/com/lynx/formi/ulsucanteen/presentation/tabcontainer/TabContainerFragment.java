@@ -80,8 +80,8 @@ public class TabContainerFragment extends MvpAppCompatFragment implements TabCon
                     presenter.replaceScreen(Screen.CATEGORIES.name(), containerName);
                     title = "Меню";
                     break;
-                case "LOOT":
-                    presenter.replaceScreen(Screen.LOOT.name(), containerName);
+                case "BUCKET":
+                    presenter.replaceScreen(Screen.BUCKET.name(), containerName);
                     title = "Корзина";
                     break;
             }

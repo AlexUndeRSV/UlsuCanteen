@@ -49,8 +49,8 @@ public class Constants {
             }
         }
 
-        public static class LootTable{
-            public static final String TABLE_NAME = "loot_table";
+        public static class BucketTable {
+            public static final String TABLE_NAME = "bucket_table";
 
             public static class Columns {
                 public static final String COLUMN_TITLE = "title";

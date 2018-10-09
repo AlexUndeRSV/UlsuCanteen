@@ -1,4 +1,4 @@
-package com.lynx.formi.ulsucanteen.presentation.gcontainer;
+package com.lynx.formi.ulsucanteen.presentation.container;
 
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,11 +17,14 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.lynx.formi.ulsucanteen.App;
 import com.lynx.formi.ulsucanteen.R;
 import com.lynx.formi.ulsucanteen.other.Screen;
+import com.lynx.formi.ulsucanteen.other.events.ClearLootEvent;
 import com.lynx.formi.ulsucanteen.other.router.CustomNavigator;
 import com.lynx.formi.ulsucanteen.other.utils.BackButtonListener;
 import com.lynx.formi.ulsucanteen.other.utils.RouterProvider;
 import com.lynx.formi.ulsucanteen.other.utils.TitleProvider;
 import com.lynx.formi.ulsucanteen.presentation.tabcontainer.TabContainerFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -35,6 +40,8 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
     private BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
 
+    private MenuItem clearLootItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +56,15 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
             switch (item.getItemId()) {
                 case R.id.item_main:
                     selectTab("MAIN");
+                    hideClearLootItem();
                     break;
                 case R.id.item_menu:
                     selectTab("MENU");
+                    hideClearLootItem();
                     break;
                 case R.id.item_loot:
-                    selectTab("LOOT");
+                    selectTab("BUCKET");
+                    showClearLootItem();
                     break;
             }
             return true;
@@ -101,6 +111,7 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
             } else {
                 showNavigationIcon();
             }
+
             transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
             toolbar.setTitle(((TitleProvider) newFragment).getTitle());
             transaction.show(newFragment);
@@ -147,6 +158,23 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
     };
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_items, menu);
+        clearLootItem = menu.findItem(R.id.clear_loot_item);
+        hideClearLootItem();
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.clear_loot_item:
+                EventBus.getDefault().post(new ClearLootEvent());
+        }
+        return true;
+    }
+
+    @Override
     public void onBackPressed() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -181,6 +209,12 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
     protected void onStart() {
         super.onStart();
         presenter.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        hideClearLootItem();
     }
 
     @Override
@@ -245,6 +279,16 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
     @Override
     public void hideNavigationIcon() {
         toolbar.setNavigationIcon(null);
+    }
+
+    @Override
+    public void showClearLootItem() {
+        if(clearLootItem != null) clearLootItem.setVisible(true);
+    }
+
+    @Override
+    public void hideClearLootItem() {
+        if(clearLootItem!= null)clearLootItem.setVisible(false);
     }
 
 

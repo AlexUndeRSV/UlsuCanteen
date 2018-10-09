@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.gcontainer.ContainerActivity"
+            android:name=".presentation.container.ContainerActivity"
             android:screenOrientation="portrait" />
     </application>
 

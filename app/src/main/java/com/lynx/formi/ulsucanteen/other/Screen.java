@@ -3,8 +3,8 @@ package com.lynx.formi.ulsucanteen.other;
 import android.os.Bundle;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.lynx.formi.ulsucanteen.presentation.bucket.BucketFragment;
 import com.lynx.formi.ulsucanteen.presentation.detail.DetailEatFragment;
-import com.lynx.formi.ulsucanteen.presentation.loot.LootFragment;
 import com.lynx.formi.ulsucanteen.presentation.main.MainFragment;
 import com.lynx.formi.ulsucanteen.presentation.menu.categories.CategoriesFragment;
 import com.lynx.formi.ulsucanteen.presentation.menu.eat.EatFragment;
@@ -17,7 +17,7 @@ public enum Screen {
     PAY,
     EAT,
     DETAIL,
-    LOOT;
+    BUCKET;
 
     public MvpAppCompatFragment create(Bundle data) {
         switch (this) {
@@ -25,8 +25,8 @@ public enum Screen {
                 return CategoriesFragment.newInstance(data);
             case MAIN:
                 return MainFragment.newInstance(data);
-            case LOOT:
-                return LootFragment.newInstance(data);
+            case BUCKET:
+                return BucketFragment.newInstance(data);
             case PAY:
                 return PayFragment.newInstance(data);
             case EAT:

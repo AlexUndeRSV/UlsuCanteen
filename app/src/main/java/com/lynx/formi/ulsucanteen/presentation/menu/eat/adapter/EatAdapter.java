@@ -12,8 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.lynx.formi.ulsucanteen.R;
-import com.lynx.formi.ulsucanteen.domain.dataclass.Eat;
-import com.squareup.picasso.Picasso;
+import com.lynx.formi.ulsucanteen.domain.dataclass.Food;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +31,15 @@ public class EatAdapter extends RecyclerView.Adapter<EatAdapter.EatViewHolder> {
     }
 
     private Context ctx;
-    private List<Eat> eatList;
+    private List<Food> foodList;
 
     public EatAdapter(Context ctx) {
         this.ctx = ctx;
-        eatList = new ArrayList<>();
+        foodList = new ArrayList<>();
     }
 
-    public void setEatList(List<Eat> eatList) {
-        this.eatList = eatList;
+    public void setFoodList(List<Food> foodList) {
+        this.foodList = foodList;
     }
 
     @NonNull
@@ -52,17 +51,17 @@ public class EatAdapter extends RecyclerView.Adapter<EatAdapter.EatViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull EatViewHolder holder, int position) {
-        Eat eat = eatList.get(position);
+        Food food = foodList.get(position);
 
-        holder.txtTitle.setText(eat.title);
-        holder.txtPrice.setText(eat.price);
-        Glide.with(ctx).load(eat.imgUrl).into(holder.imgPhoto);
-//        Picasso.with(ctx).load(eat.imgUrl).into(holder.imgPhoto);
+        holder.txtTitle.setText(food.title);
+        holder.txtPrice.setText(food.price);
+        Glide.with(ctx).load(food.imgUrl).into(holder.imgPhoto);
+//        Picasso.with(ctx).load(food.imgUrl).into(holder.imgPhoto);
     }
 
     @Override
     public int getItemCount() {
-        return eatList.size();
+        return foodList.size();
     }
 
     public class EatViewHolder extends RecyclerView.ViewHolder {

@@ -3,7 +3,7 @@ package com.lynx.formi.ulsucanteen.domain.dataclass;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Eat implements Parcelable{
+public class Food implements Parcelable{
 
     public String imgUrl;
     public String title;
@@ -14,9 +14,9 @@ public class Eat implements Parcelable{
 
     public String count;
 
-    public Eat(){}
+    public Food(){}
 
-    protected Eat(Parcel in) {
+    protected Food(Parcel in) {
         imgUrl = in.readString();
         title = in.readString();
         id = in.readString();
@@ -26,15 +26,15 @@ public class Eat implements Parcelable{
         count = in.readString();
     }
 
-    public static final Creator<Eat> CREATOR = new Creator<Eat>() {
+    public static final Creator<Food> CREATOR = new Creator<Food>() {
         @Override
-        public Eat createFromParcel(Parcel in) {
-            return new Eat(in);
+        public Food createFromParcel(Parcel in) {
+            return new Food(in);
         }
 
         @Override
-        public Eat[] newArray(int size) {
-            return new Eat[size];
+        public Food[] newArray(int size) {
+            return new Food[size];
         }
     };
 

@@ -17,12 +17,15 @@ public class App extends Application {
 
     private LocalCiceroneHolder ciceroneHolder;
 
+    private DBRepository dbRepository;
+
     @Override
     public void onCreate() {
         super.onCreate();
         INSTANCE = this;
         ciceroneGlobal = Cicerone.create();
         ciceroneHolder = new LocalCiceroneHolder();
+        dbRepository = new DBRepository(this);
     }
 
     public static LocalCiceroneHolder getCiceroneHolder(){
@@ -37,7 +40,6 @@ public class App extends Application {
         return INSTANCE.ciceroneGlobal.getRouter();
     }
 
-    final private DBRepository dbRepository = new DBRepository(this);
     public static DBRepository getDBRepository() {
         return INSTANCE.dbRepository;
     }

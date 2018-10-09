@@ -1,4 +1,4 @@
-package com.lynx.formi.ulsucanteen.presentation.loot;
+package com.lynx.formi.ulsucanteen.presentation.bucket;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -12,43 +12,59 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
-import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.lynx.formi.ulsucanteen.R;
-import com.lynx.formi.ulsucanteen.domain.dataclass.Eat;
+import com.lynx.formi.ulsucanteen.domain.dataclass.Food;
+import com.lynx.formi.ulsucanteen.other.events.HideLoaderEvent;
 import com.lynx.formi.ulsucanteen.other.itemdecorators.LinearItemDecorator;
 import com.lynx.formi.ulsucanteen.other.utils.RouterProvider;
 import com.lynx.formi.ulsucanteen.other.utils.TitleProvider;
-import com.lynx.formi.ulsucanteen.presentation.loot.adapter.LootAdapter;
+
+import com.arellomobile.mvp.MvpAppCompatFragment;
+
+import com.lynx.formi.ulsucanteen.R;
+
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.lynx.formi.ulsucanteen.presentation.bucket.adapter.BucketAdapter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-public class LootFragment extends MvpAppCompatFragment implements LootView, TitleProvider {
-    public static final String TAG = "LootFragment";
+public class BucketFragment extends MvpAppCompatFragment implements BucketView, TitleProvider, BucketAdapter.OnCountChangeListener {
+    public static final String TAG = "BucketFragment";
     private final String TITLE = "Корзина";
     @InjectPresenter
-    LootPresenter presenter;
+    BucketPresenter presenter;
 
     @ProvidePresenter
-    LootPresenter provideLootPresenter(){
-        return new LootPresenter(((RouterProvider) getParentFragment()).getRouter());
+    BucketPresenter provideLootPresenter() {
+        return new BucketPresenter(((RouterProvider) getParentFragment()).getRouter());
     }
 
     private Button btnGoToPay;
 
     private RecyclerView recView;
-    private LootAdapter adapter;
+    private BucketAdapter adapter;
 
-    private List<Eat> eatList;
+    private List<Food> foodList;
 
     private View emptyLoot;
     private TextView txtAddEat;
 
-    public static LootFragment newInstance(Bundle args) {
-        LootFragment fragment = new LootFragment();
+    private int totalPrice = 0;
+    private String totalPriceText;
+
+
+    public static BucketFragment newInstance(Bundle args) {
+        BucketFragment fragment = new BucketFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        presenter.onCreate(this);
     }
 
     @Override
@@ -66,7 +82,7 @@ public class LootFragment extends MvpAppCompatFragment implements LootView, Titl
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_loot, container, false);
+        return inflater.inflate(R.layout.fragment_bucket, container, false);
     }
 
     private ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
@@ -78,13 +94,13 @@ public class LootFragment extends MvpAppCompatFragment implements LootView, Titl
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-            Eat eat = eatList.get(viewHolder.getAdapterPosition());
+            Food food = foodList.get(viewHolder.getAdapterPosition());
             // TODO кастомизировать AlertDialog
             AlertDialog.Builder ab = new AlertDialog.Builder(getActivity())
                     .setTitle("Подтверждение действия")
-                    .setMessage("Вы действительно хотите удалить \"" + eat.title + "\" из корзины?")
+                    .setMessage("Вы действительно хотите удалить \"" + food.title + "\" из корзины?")
                     .setPositiveButton("Да", (dialog, which) -> {
-                        presenter.deleteItem(viewHolder.getAdapterPosition(), eat);
+                        presenter.deleteItem(viewHolder.getAdapterPosition(), food);
                         dialog.dismiss();
                     })
                     .setNegativeButton("Нет", ((dialog, which) -> {
@@ -114,7 +130,7 @@ public class LootFragment extends MvpAppCompatFragment implements LootView, Titl
         recView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recView.addItemDecoration(new LinearItemDecorator(20));
 
-        adapter = new LootAdapter(getActivity());
+        adapter = new BucketAdapter(getActivity());
         recView.setAdapter(adapter);
 
         presenter.showBNV();
@@ -124,21 +140,66 @@ public class LootFragment extends MvpAppCompatFragment implements LootView, Titl
         btnGoToPay.setOnClickListener((v) -> presenter.goToPay());
 
         itemTouchHelper.attachToRecyclerView(recView);
+
+        adapter.setOnCountChangeListener(this);
+
+        presenter.showClearLootItem();
     }
 
     @Override
     public void notifyItemDeleted(String title, int position) {
-        if(eatList.isEmpty()) return;
-        eatList.remove(position);
+        if (foodList.isEmpty()) return;
+        totalPrice = presenter.getTotalPrice();
+//        totalPrice -= Integer.valueOf(foodList.get(position).price) * Integer.valueOf(foodList.get(position).count);
+        foodList.remove(position);
+        notifyTotalPriceChanged();
         adapter.notifyDataSetChanged();
         Snackbar.make(recView, title + " удален(а) из корзины", Snackbar.LENGTH_INDEFINITE)
                 .setAction("OK", (v) -> {
                 })
                 .show();
-        if (eatList.isEmpty()) {
+        if (foodList.isEmpty()) {
             emptyLoot.setVisibility(View.VISIBLE);
             recView.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void notifyLootCleared() {
+        if (foodList.isEmpty()){
+            EventBus.getDefault().post(new HideLoaderEvent());
+            return;
+        }
+        totalPrice = presenter.getTotalPrice();
+        foodList.clear();
+        notifyTotalPriceChanged();
+        adapter.notifyDataSetChanged();
+
+        emptyLoot.setVisibility(View.VISIBLE);
+        recView.setVisibility(View.GONE);
+
+        EventBus.getDefault().post(new HideLoaderEvent());
+    }
+
+    @Override
+    public void requestForClear() {
+        AlertDialog.Builder ab = new AlertDialog.Builder(getActivity())
+                .setTitle("Подтверждение действия")
+                .setMessage("Вы действительно хотите очистить корзину?")
+                .setPositiveButton("Да", (dialog, which) -> {
+                    presenter.clearLoot();
+                    dialog.dismiss();
+                })
+                .setNegativeButton("Нет", ((dialog, which) -> {
+                    dialog.dismiss();
+                }))
+                .setCancelable(false);
+        AlertDialog alertDialog = ab.create();
+        alertDialog.setOnShowListener(dialog -> {
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(android.R.color.black));
+            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(android.R.color.black));
+        });
+        alertDialog.show();
     }
 
     @Override
@@ -148,21 +209,42 @@ public class LootFragment extends MvpAppCompatFragment implements LootView, Titl
     }
 
     @Override
-    public void setLootList(List<Eat> eatList) {
-        this.eatList = eatList;
-        adapter.setEatList(eatList);
+    public void setLootList(List<Food> foodList) {
+        this.foodList = foodList;
+        adapter.setFoodList(foodList);
         adapter.notifyDataSetChanged();
-        if (eatList.isEmpty()) {
+        if (foodList.isEmpty()) {
             emptyLoot.setVisibility(View.VISIBLE);
             recView.setVisibility(View.GONE);
         } else {
             emptyLoot.setVisibility(View.GONE);
             recView.setVisibility(View.VISIBLE);
         }
+        totalPrice = presenter.getTotalPrice();
+        notifyTotalPriceChanged();
     }
 
     @Override
     public String getTitle() {
         return TITLE;
+    }
+
+    @Override
+    public void onIncrementClick(String id, int price) {
+        totalPrice += price;
+        presenter.incrementDatabaseCount(id);
+        notifyTotalPriceChanged();
+    }
+
+    @Override
+    public void onDecrementClick(String id, int price) {
+        totalPrice -= price;
+        presenter.decrementDatabaseCount(id);
+        notifyTotalPriceChanged();
+    }
+
+    private void notifyTotalPriceChanged() {
+        totalPriceText = getActivity().getResources().getString(R.string.go_to_pay) + " (" + String.valueOf(totalPrice) + " руб.)";
+        btnGoToPay.setText(totalPriceText);
     }
 }

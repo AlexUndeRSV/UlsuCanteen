@@ -13,8 +13,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.lynx.formi.ulsucanteen.R;
 import com.lynx.formi.ulsucanteen.domain.dataclass.Category;
-import com.lynx.formi.ulsucanteen.domain.dataclass.Eat;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;

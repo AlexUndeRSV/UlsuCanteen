@@ -11,4 +11,5 @@
     <string name="price">Цена:</string>
     <string name="add">Добавить</string>
     <string name="empty_loot">Ваша корзина пуста.</string>
+    <string name="clear_loot">Очистить корзину</string>
 </resources>
