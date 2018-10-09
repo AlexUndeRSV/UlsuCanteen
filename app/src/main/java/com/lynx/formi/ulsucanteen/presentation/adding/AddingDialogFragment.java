@@ -147,18 +147,26 @@ public class AddingDialogFragment extends DialogFragment implements AddingDialog
     }
 
     @Override
-    public void notifyEatAdded(String title, String count) {
+    public void notifyEatAdded(String title, boolean isMax) {
         dismiss();
-        EventBus.getDefault().post(new ShowMessageEvent(title + " добавлен(а) в корзину (x" + count + ")"));
+        String message;
+        if(isMax){
+            message = title + " не умещается в корзину(";
+        }else{
+            message = title + " добавлен(а) в корзину";
+        }
+        EventBus.getDefault().post(new ShowMessageEvent(message));
     }
 
-    // Presenter не успевает создаться
+    // Presenter не успевает создаться (?) :(
     private void addToLoot(Food food, int count){
         EventBus.getDefault().post(new ShowLoaderEvent());
+
         food.count = String.valueOf(count);
-        App.getDBRepository().addFoodToBucket(food);
+        boolean isMax = App.getDBRepository().addFoodToBucket(food);
         EventBus.getDefault().post(new NewItemInLootEvent());
-        notifyEatAdded(food.title, String.valueOf(count));
+        notifyEatAdded(food.title, isMax);
+
         EventBus.getDefault().post(new HideLoaderEvent());
     }
 }

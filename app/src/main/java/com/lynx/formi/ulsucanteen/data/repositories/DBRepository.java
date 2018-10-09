@@ -8,9 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.lynx.formi.ulsucanteen.data.db.DbHelper;
 import com.lynx.formi.ulsucanteen.domain.dataclass.Category;
 import com.lynx.formi.ulsucanteen.domain.dataclass.Food;
+import com.lynx.formi.ulsucanteen.other.Constants.UlsuDatabase.BucketTable;
 import com.lynx.formi.ulsucanteen.other.Constants.UlsuDatabase.CategoriesTable;
 import com.lynx.formi.ulsucanteen.other.Constants.UlsuDatabase.EatTable;
-import com.lynx.formi.ulsucanteen.other.Constants.UlsuDatabase.BucketTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +86,7 @@ public class DBRepository {
         db.close();
     }*/
 
-    public void saveFoodList(List<Food> foodList){
+    public void saveFoodList(List<Food> foodList) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         db.beginTransaction();
@@ -148,21 +148,6 @@ public class DBRepository {
         return sb.toString();
     }
 
-    /*public void addEat(Food eat) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        ContentValues cv = new ContentValues();
-        cv.put(EatTable.Columns.COLUMN_TITLE, eat.title);
-        cv.put(EatTable.Columns.COLUMN_ID, eat.id);
-        cv.put(EatTable.Columns.COLUMN_IMG_URL, eat.imgUrl);
-        cv.put(EatTable.Columns.COLUMN_PRICE, eat.price);
-        cv.put(EatTable.Columns.COLUMN_CATEGORY_ID, eat.categoryId);
-        cv.put(EatTable.Columns.COLUMN_DESCRIPTION, eat.description);
-
-        db.insert(EatTable.TABLE_NAME, null, cv);
-        db.close();
-    }*/
-
     public List<Food> getBucketFoodList() {
         List<Food> foodList = new ArrayList<>();
 
@@ -189,8 +174,29 @@ public class DBRepository {
         return foodList;
     }
 
-    public void addFoodToBucket(Food food) {
+    public boolean addFoodToBucket(Food food) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        int bufCount;
+        String id = null;
+
+        boolean isMax = false;
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + BucketTable.TABLE_NAME + " WHERE " + BucketTable.Columns.COLUMN_ID + "=" + food.id, null);
+
+        if (cursor.moveToFirst()) {
+            if(Integer.valueOf(cursor.getString(cursor.getColumnIndex(BucketTable.Columns.COLUMN_COUNT))) > 8){
+                isMax = true;
+            }
+            bufCount = Integer.valueOf(cursor.getString(cursor.getColumnIndex(BucketTable.Columns.COLUMN_COUNT))) + Integer.valueOf(food.count);
+            if (bufCount > 9) {
+                food.count = "9";
+            } else {
+                food.count = String.valueOf(bufCount);
+            }
+            id = cursor.getString(cursor.getColumnIndex(BucketTable.Columns.COLUMN_ID));
+        }
+        cursor.close();
 
         ContentValues cv = new ContentValues();
         cv.put(BucketTable.Columns.COLUMN_TITLE, food.title);
@@ -201,8 +207,14 @@ public class DBRepository {
         cv.put(BucketTable.Columns.COLUMN_CATEGORY_ID, food.categoryId);
         cv.put(BucketTable.Columns.COLUMN_DESCRIPTION, food.description);
 
-        db.insert(BucketTable.TABLE_NAME, null, cv);
+        if (id != null) {
+            db.update(BucketTable.TABLE_NAME, cv, BucketTable.Columns.COLUMN_ID + " = " + id, null);
+        } else {
+            db.insert(BucketTable.TABLE_NAME, null, cv);
+        }
         db.close();
+
+        return isMax;
     }
 
     public void deleteFromBucket(String id) {
@@ -236,16 +248,16 @@ public class DBRepository {
         return food;
     }
 
-    public int getTotalBucketPrice(){
+    public int getTotalBucketPrice() {
         int totalPrice = 0;
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + BucketTable.TABLE_NAME, null);
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             do {
                 totalPrice += Integer.valueOf(cursor.getString(cursor.getColumnIndex(BucketTable.Columns.COLUMN_COUNT))) * Integer.valueOf(cursor.getString(cursor.getColumnIndex(BucketTable.Columns.COLUMN_PRICE)));
-            }while (cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 
         cursor.close();
@@ -270,7 +282,7 @@ public class DBRepository {
         Cursor cursor = db.rawQuery("SELECT * FROM " + BucketTable.TABLE_NAME + " WHERE " + BucketTable.Columns.COLUMN_ID + "=" + id, null);
 
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             count = Integer.valueOf(cursor.getString(cursor.getColumnIndex(BucketTable.Columns.COLUMN_COUNT)));
         }
 
@@ -289,7 +301,7 @@ public class DBRepository {
         Cursor cursor = db.rawQuery("SELECT * FROM " + BucketTable.TABLE_NAME + " WHERE " + BucketTable.Columns.COLUMN_ID + "=" + id, null);
 
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             count = Integer.valueOf(cursor.getString(cursor.getColumnIndex(BucketTable.Columns.COLUMN_COUNT)));
         }
 

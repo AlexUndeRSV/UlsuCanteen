@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardElevation="8dp"
     android:id="@+id/eatCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/colorPrimary"
     app:cardCornerRadius="3dp"
-    android:layout_height="wrap_content">
+    app:cardElevation="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,57 +15,57 @@
 
         <ImageView
             android:id="@+id/imgEatPhoto"
-            android:layout_marginBottom="8dp"
-            android:transitionName="eat_photo_transaction"
-            android:src="@drawable/ic_launcher_background"
-            android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="200dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background"
+            android:transitionName="eat_photo_transaction" />
 
         <Button
             android:id="@+id/btnShowDialog"
-            android:layout_below="@+id/imgEatPhoto"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/add_to_loot"
             style="@style/AddToLootButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/imgEatPhoto"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/add_to_loot" />
 
         <TextView
             android:id="@+id/txtEatPrice"
-            android:textColor="@color/colorAccent"
-            tools:text="219"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/btnShowDialog"
             android:layout_marginStart="16dp"
+            android:textColor="@color/colorAccent"
             android:textSize="24sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            tools:text="219" />
 
         <TextView
             android:id="@+id/txtRub"
-            android:text="@string/rubles"
-            android:textSize="24sp"
-            android:layout_alignBaseline="@+id/txtEatPrice"
-            android:layout_toEndOf="@+id/txtEatPrice"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorAccent"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/txtEatPrice"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/txtEatPrice"
+            android:text="@string/rubles"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/txtEatTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:ellipsize="end"
             android:layout_alignBottom="@+id/imgEatPhoto"
             android:layout_alignEnd="@+id/imgEatPhoto"
             android:layout_marginBottom="3dp"
-            android:layout_marginStart="11dp"
             android:layout_marginEnd="3dp"
+            android:layout_marginStart="11dp"
             android:background="@drawable/txt_bckg"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:padding="8dp"
             android:textColor="@android:color/black"
             android:textSize="24sp"

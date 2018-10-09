@@ -19,7 +19,7 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
-    <style name="IncDecrButtonStyle">
+    <style name="StandardButtonStyle">
         <item name="android:background">@drawable/btn_style_enable</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
