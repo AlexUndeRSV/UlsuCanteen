@@ -77,7 +77,7 @@ public class EatFragment extends MvpAppCompatFragment implements EatView, EatAda
 
         recView = view.findViewById(R.id.recViewEat);
         recView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recView.addItemDecoration(new LinearItemDecorator(0));
+        recView.addItemDecoration(new LinearItemDecorator(30));
 
         adapter = new EatAdapter(getActivity());
         adapter.setEatClickListener(this);

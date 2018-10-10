@@ -21,7 +21,7 @@ public class LinearItemDecorator extends RecyclerView.ItemDecoration {
             outRect.right = space;
         } else if (parent.getChildLayoutPosition(view) == state.getItemCount() - 1) {
             outRect.left = space;
-            outRect.top = space / 2;
+            outRect.top = space / 3 * 2;
             outRect.right = space;
             outRect.bottom = space;
         } else {

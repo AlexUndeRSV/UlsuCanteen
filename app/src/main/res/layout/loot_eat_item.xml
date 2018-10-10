@@ -14,6 +14,7 @@
         <ImageView
             android:id="@+id/imgLootEatPhoto"
             android:layout_width="150dp"
+            android:elevation="8dp"
             android:layout_height="150dp"
             android:layout_margin="8dp"
             android:scaleType="centerCrop"
@@ -58,9 +59,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_toStartOf="@+id/txtLootEatCount"
-                android:background="@drawable/btn_style_enable"
+                style="@style/ChangeCountButtonStyle"
+                android:elevation="8dp"
                 android:padding="8dp"
-                android:src="@drawable/ic_minus"
+                android:src="@drawable/ic_minus_2"
                 app:layout_constraintDimensionRatio="1:1" />
 
             <TextView
@@ -83,9 +85,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="24dp"
-                android:background="@drawable/btn_style_enable"
+                style="@style/ChangeCountButtonStyle"
+                android:elevation="8dp"
                 android:padding="8dp"
-                android:src="@drawable/ic_plus"
+                android:src="@drawable/ic_plus_2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toEndOf="@id/txtLootEatCount" />

@@ -1,6 +1,8 @@
 package com.lynx.formi.ulsucanteen.presentation.pay;
 
 
+import com.lynx.formi.ulsucanteen.other.events.HideBottomNavigationEvent;
+import com.lynx.formi.ulsucanteen.other.events.HideClearLootItemEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowToolbarIcon;
 import com.lynx.formi.ulsucanteen.other.events.TitleEvent;
 import com.lynx.formi.ulsucanteen.presentation.pay.PayView;
@@ -30,5 +32,13 @@ public class PayPresenter extends MvpPresenter<PayView> {
 
     public void showToolbarIcon() {
         EventBus.getDefault().post(new ShowToolbarIcon());
+    }
+
+    public void hideClearLootItem() {
+        EventBus.getDefault().post(new HideClearLootItemEvent());
+    }
+
+    public void hideBNV() {
+        EventBus.getDefault().post(new HideBottomNavigationEvent());
     }
 }

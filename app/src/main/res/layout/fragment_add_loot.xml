@@ -10,9 +10,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toStartOf="@+id/txtEatCount"
-        android:background="@drawable/btn_style_enable"
+        style="@style/ChangeCountButtonStyle"
         android:padding="8dp"
-        android:src="@drawable/ic_minus" />
+        android:src="@drawable/ic_minus_2" />
 
     <TextView
         android:id="@+id/txtEatCount"
@@ -32,9 +32,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/btn_style_enable"
+        style="@style/ChangeCountButtonStyle"
         android:padding="8dp"
-        android:src="@drawable/ic_plus" />
+        android:src="@drawable/ic_plus_2" />
 
     <TextView
         android:id="@+id/txtAddingEatPrice"
@@ -81,7 +81,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_weight="1"
-            android:background="@drawable/btn_style_enable"
             android:text="@string/add" />
 
     </LinearLayout>

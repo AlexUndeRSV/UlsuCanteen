@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lynx.formi.ulsucanteen.R;
 import com.lynx.formi.ulsucanteen.domain.dataclass.Food;
 import com.squareup.picasso.Picasso;
@@ -58,46 +59,42 @@ public class BucketAdapter extends RecyclerView.Adapter<BucketAdapter.LootViewHo
 
         holder.txtCount.setText(food.count);
 
-        if (Integer.valueOf(food.count) == 1) {
-            holder.btnDecrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_disable));
+        /*if (Integer.valueOf(food.count) == 1) {
+            holder.btnDecrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_default));
             holder.btnDecrement.setClickable(false);
         }else if (Integer.valueOf(food.count) == 9) {
-            holder.btnIncrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_disable));
+            holder.btnIncrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_default));
             holder.btnIncrement.setClickable(false);
         } else{
-            holder.btnIncrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_enable));
+            holder.btnIncrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_count));
             holder.btnIncrement.setClickable(true);
 
-            holder.btnDecrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_enable));
+            holder.btnDecrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_count));
             holder.btnDecrement.setClickable(true);
-        }
+        }*/
 
         holder.txtTitle.setText(food.title);
         holder.txtPrice.setText(String.valueOf(Integer.valueOf(food.price) * Integer.valueOf(food.count)));
-        Picasso.with(ctx).load(food.imgUrl).into(holder.imgPhoto);
+        Glide.with(ctx).load(food.imgUrl).into(holder.imgPhoto);
 
         holder.btnIncrement.setOnClickListener((v) ->
-
         {
-            if (onCountChangeListener != null)
-                onCountChangeListener.onIncrementClick(food.id, Integer.valueOf(food.price));
-
             if(onIncrementClick(Integer.valueOf(food.count), holder.btnIncrement, holder.btnDecrement)){
                 food.count = String.valueOf(Integer.valueOf(food.count) + 1);
+
+                if (onCountChangeListener != null)
+                onCountChangeListener.onIncrementClick(food.id, Integer.valueOf(food.price));
             }
 
             holder.txtCount.setText(food.count);
             holder.txtPrice.setText(String.valueOf(Integer.valueOf(food.price) * Integer.valueOf(food.count)));
         });
 
-        holder.btnDecrement.setOnClickListener((v) ->
-
-        {
-            if (onCountChangeListener != null)
-                onCountChangeListener.onDecrementClick(food.id, Integer.valueOf(food.price));
-
+        holder.btnDecrement.setOnClickListener((v) ->{
             if (onDecrementClick(Integer.valueOf(food.count), holder.btnDecrement, holder.btnIncrement)) {
                 food.count = String.valueOf(Integer.valueOf(food.count) - 1);
+            if (onCountChangeListener != null)
+                onCountChangeListener.onDecrementClick(food.id, Integer.valueOf(food.price));
             }
 
             holder.txtCount.setText(food.count);
@@ -107,18 +104,18 @@ public class BucketAdapter extends RecyclerView.Adapter<BucketAdapter.LootViewHo
 
     private boolean onDecrementClick(int count, ImageButton btnDecrement, ImageButton btnIncrement) {
         if (count < 2) {
-            btnDecrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_disable));
+//            btnDecrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_default));
             btnDecrement.setClickable(false);
             return false;
         }
 
         if(count == 2){
-            btnDecrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_disable));
+//            btnDecrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_default));
             btnDecrement.setClickable(false);
             return true;
         }
 
-        btnIncrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_enable));
+//        btnIncrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_count));
         btnIncrement.setClickable(true);
 
         return true;
@@ -126,18 +123,18 @@ public class BucketAdapter extends RecyclerView.Adapter<BucketAdapter.LootViewHo
 
     private boolean onIncrementClick(int count, ImageButton btnIncrement, ImageButton btnDecrement) {
         if (count > 8) {
-            btnIncrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_disable));
+//            btnIncrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_default));
             btnIncrement.setClickable(false);
             return false;
         }
 
         if(count == 8){
-            btnIncrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_disable));
+//            btnIncrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_default));
             btnIncrement.setClickable(false);
             return true;
         }
 
-        btnDecrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_enable));
+//        btnDecrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_count));
         btnDecrement.setClickable(true);
         return true;
     }

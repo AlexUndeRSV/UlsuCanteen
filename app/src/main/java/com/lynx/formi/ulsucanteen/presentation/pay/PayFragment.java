@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.lynx.formi.ulsucanteen.other.events.HideBottomNavigationEvent;
+import com.lynx.formi.ulsucanteen.other.events.HideClearLootItemEvent;
 import com.lynx.formi.ulsucanteen.other.utils.BackButtonListener;
 import com.lynx.formi.ulsucanteen.other.utils.RouterProvider;
 import com.lynx.formi.ulsucanteen.presentation.pay.PayView;
@@ -25,6 +27,8 @@ public class PayFragment extends MvpAppCompatFragment implements PayView, BackBu
     private final String TITLE = "Оплата";
     @InjectPresenter
     PayPresenter presenter;
+
+    private Button btnPay;
 
     @ProvidePresenter
     PayPresenter providePayPresenter(){
@@ -47,7 +51,10 @@ public class PayFragment extends MvpAppCompatFragment implements PayView, BackBu
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        EventBus.getDefault().post(new HideBottomNavigationEvent());
+        presenter.hideBNV();
+        presenter.hideClearLootItem();
+
+        btnPay = view.findViewById(R.id.btnPay);
     }
 
     @Override
