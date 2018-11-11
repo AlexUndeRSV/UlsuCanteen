@@ -33,11 +33,11 @@ import ru.terrakok.cicerone.Router;
 @InjectViewState
 public class CategoriesPresenter extends MvpPresenter<CategoriesView> {
 
-    private Router router;
+    private final Router router;
 
-    private List<Food> foodList;
+    private final List<Food> foodList;
 
-    public CategoriesPresenter(Router router) {
+    public CategoriesPresenter(final Router router) {
         this.router = router;
         foodList = new ArrayList<>();
     }
@@ -48,18 +48,18 @@ public class CategoriesPresenter extends MvpPresenter<CategoriesView> {
         getViewState().setCategories(App.getDBRepository().getCategoryList());
     }
 
-    public void navigateToEatFragment(String id, String title) {
-        Bundle args = new Bundle();
+    public void navigateToEatFragment(final String id, final String title) {
+        final Bundle args = new Bundle();
         args.putString(Constants.BundleKeys.ID_KEY, id);
         args.putString(Constants.BundleKeys.TITLE_KEY, title);
         router.navigateTo(Screen.EAT.name(), args);
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         EventBus.getDefault().post(new TitleEvent(title));
     }
 
-    public ValueEventListener getValueEventListener(boolean isNeedLoad) {
+    public ValueEventListener getValueEventListener(final boolean isNeedLoad) {
         if (isNeedLoad) {
             EventBus.getDefault().post(new ShowLoaderEvent());
             EventBus.getDefault().post(new HideBottomNavigationEvent());
@@ -68,9 +68,9 @@ public class CategoriesPresenter extends MvpPresenter<CategoriesView> {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 foodList.clear();
-                GenericTypeIndicator<List<Category>> t = new GenericTypeIndicator<List<Category>>() {
+                final GenericTypeIndicator<List<Category>> t = new GenericTypeIndicator<List<Category>>() {
                 };
-                List<Category> categoryList = dataSnapshot.getValue(t);
+                final List<Category> categoryList = dataSnapshot.getValue(t);
                 for (Category category : categoryList) {
                     if (category.getFood() != null) {
                         foodList.addAll(category.getFood());

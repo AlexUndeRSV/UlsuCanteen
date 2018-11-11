@@ -13,33 +13,36 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.lynx.formi.ulsucanteen.R;
 import com.lynx.formi.ulsucanteen.domain.dataclass.Food;
+import com.lynx.formi.ulsucanteen.other.utils.OnButtonAddClickListener;
+import com.lynx.formi.ulsucanteen.other.utils.OnListItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EatAdapter extends RecyclerView.Adapter<EatAdapter.EatViewHolder> {
 
-    public interface EatClickListener {
-        void onButtonAddClickListener(int position);
-        void onItemClickListener(int position);
+    private OnListItemClickListener onListItemClickListener = null;
+    private OnButtonAddClickListener onButtonAddClickListener = null;
+
+    public void setOnListItemClickListener(final OnListItemClickListener onListItemClickListener) {
+        this.onListItemClickListener = onListItemClickListener;
     }
 
-    private EatClickListener eatClickListener = null;
-
-    public void setEatClickListener(EatClickListener eatClickListener) {
-        this.eatClickListener = eatClickListener;
+    public void setOnButtonAddClickListener(final OnButtonAddClickListener onButtonAddClickListener) {
+        this.onButtonAddClickListener = onButtonAddClickListener;
     }
 
-    private Context ctx;
-    private List<Food> foodList;
+    private final Context ctx;
+    private final List<Food> foodList;
 
     public EatAdapter(Context ctx) {
         this.ctx = ctx;
         foodList = new ArrayList<>();
     }
 
-    public void setFoodList(List<Food> foodList) {
-        this.foodList = foodList;
+    public void setFoodList(final List<Food> foodList) {
+        this.foodList.clear();
+        this.foodList.addAll(foodList);
     }
 
     @NonNull
@@ -56,7 +59,6 @@ public class EatAdapter extends RecyclerView.Adapter<EatAdapter.EatViewHolder> {
         holder.txtTitle.setText(food.title);
         holder.txtPrice.setText(food.price);
         Glide.with(ctx).load(food.imgUrl).into(holder.imgPhoto);
-//        Picasso.with(ctx).load(food.imgUrl).into(holder.imgPhoto);
     }
 
     @Override
@@ -80,20 +82,20 @@ public class EatAdapter extends RecyclerView.Adapter<EatAdapter.EatViewHolder> {
             txtTitle = itemView.findViewById(R.id.txtEatTitle);
             btnAddLoot = itemView.findViewById(R.id.btnShowDialog);
             btnAddLoot.setOnClickListener((v) -> {
-                if (eatClickListener != null) {
+                if (onButtonAddClickListener != null) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        eatClickListener.onButtonAddClickListener(position);
+                        onButtonAddClickListener.onAddClick(position);
                     }
                 }
             });
 
             cardEat = itemView.findViewById(R.id.eatCard);
             cardEat.setOnClickListener((v)->{
-                if(eatClickListener != null){
+                if(onListItemClickListener != null){
                     int position = getAdapterPosition();
                     if(position != RecyclerView.NO_POSITION){
-                        eatClickListener.onItemClickListener(position);
+                        onListItemClickListener.onItemClick(position);
                     }
                 }
             });

@@ -94,7 +94,7 @@ public class BucketFragment extends MvpAppCompatFragment implements BucketView, 
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-            Food food = foodList.get(viewHolder.getAdapterPosition());
+            final Food food = foodList.get(viewHolder.getAdapterPosition());
             // TODO кастомизировать AlertDialog
             AlertDialog.Builder ab = new AlertDialog.Builder(getActivity())
                     .setTitle("Подтверждение действия")
@@ -108,7 +108,7 @@ public class BucketFragment extends MvpAppCompatFragment implements BucketView, 
                         dialog.dismiss();
                     }))
                     .setCancelable(false);
-            AlertDialog alertDialog = ab.create();
+            final AlertDialog alertDialog = ab.create();
             alertDialog.setOnShowListener(dialog -> {
                 alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(android.R.color.black));
                 alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(android.R.color.black));
@@ -147,12 +147,13 @@ public class BucketFragment extends MvpAppCompatFragment implements BucketView, 
     }
 
     @Override
-    public void notifyItemDeleted(String title, int position) {
+    public void notifyItemDeleted(final String title, final int position) {
         if (foodList.isEmpty()) return;
         totalPrice = presenter.getTotalPrice();
 //        totalPrice -= Integer.valueOf(foodList.get(position).price) * Integer.valueOf(foodList.get(position).count);
         foodList.remove(position);
         notifyTotalPriceChanged();
+        adapter.setFoodList(foodList);
         adapter.notifyDataSetChanged();
         Snackbar.make(recView, title + " удален(а) из корзины", Snackbar.LENGTH_INDEFINITE)
                 .setAction("OK", (v) -> {
@@ -209,7 +210,7 @@ public class BucketFragment extends MvpAppCompatFragment implements BucketView, 
     }
 
     @Override
-    public void setLootList(List<Food> foodList) {
+    public void setLootList(final List<Food> foodList) {
         this.foodList = foodList;
         adapter.setFoodList(foodList);
         adapter.notifyDataSetChanged();
@@ -230,14 +231,14 @@ public class BucketFragment extends MvpAppCompatFragment implements BucketView, 
     }
 
     @Override
-    public void onIncrementClick(String id, int price) {
+    public void onIncrementClick(final String id, final int price) {
         totalPrice += price;
         presenter.incrementDatabaseCount(id);
         notifyTotalPriceChanged();
     }
 
     @Override
-    public void onDecrementClick(String id, int price) {
+    public void onDecrementClick(final String id, final int price) {
         totalPrice -= price;
         presenter.decrementDatabaseCount(id);
         notifyTotalPriceChanged();

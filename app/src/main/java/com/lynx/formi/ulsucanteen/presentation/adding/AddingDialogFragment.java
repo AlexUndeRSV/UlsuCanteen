@@ -16,7 +16,7 @@ import com.lynx.formi.ulsucanteen.R;
 import com.lynx.formi.ulsucanteen.domain.dataclass.Food;
 import com.lynx.formi.ulsucanteen.other.Constants;
 import com.lynx.formi.ulsucanteen.other.events.HideLoaderEvent;
-import com.lynx.formi.ulsucanteen.other.events.NewItemInLootEvent;
+import com.lynx.formi.ulsucanteen.other.events.BucketSetChangedEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowLoaderEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowMessageEvent;
 
@@ -95,7 +95,6 @@ public class AddingDialogFragment extends DialogFragment implements AddingDialog
 
     private void onPlusClick(){
         if (count > 8) {
-//            btnPlus.setBackgroundColor(getActivity().getResources().getColor(R.color.gray));
             btnPlus.setClickable(false);
             return;
         }
@@ -106,12 +105,10 @@ public class AddingDialogFragment extends DialogFragment implements AddingDialog
             totalPrice = singlePrice * count;
             txtPrice.setText(String.valueOf(totalPrice));
 
-//            btnPlus.setBackgroundColor(getActivity().getResources().getColor(R.color.gray));
             btnPlus.setClickable(true);
             return;
         }
 
-//        btnMinus.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
         btnMinus.setClickable(true);
         count++;
         txtCount.setText(String.valueOf(count));
@@ -147,7 +144,7 @@ public class AddingDialogFragment extends DialogFragment implements AddingDialog
     }
 
     @Override
-    public void notifyEatAdded(String title, boolean isMax) {
+    public void notifyEatAdded(final String title, final boolean isMax) {
         dismiss();
         String message;
         if(isMax){
@@ -159,12 +156,12 @@ public class AddingDialogFragment extends DialogFragment implements AddingDialog
     }
 
     // Presenter не успевает создаться (?) :(
-    private void addToLoot(Food food, int count){
+    private void addToLoot(final Food food, final int count){
         EventBus.getDefault().post(new ShowLoaderEvent());
 
         food.count = String.valueOf(count);
         boolean isMax = App.getDBRepository().addFoodToBucket(food);
-        EventBus.getDefault().post(new NewItemInLootEvent());
+        EventBus.getDefault().post(new BucketSetChangedEvent());
         notifyEatAdded(food.title, isMax);
 
         EventBus.getDefault().post(new HideLoaderEvent());

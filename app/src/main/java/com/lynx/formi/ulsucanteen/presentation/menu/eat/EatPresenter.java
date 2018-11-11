@@ -20,11 +20,11 @@ import ru.terrakok.cicerone.Router;
 @InjectViewState
 public class EatPresenter extends MvpPresenter<EatView> {
 
-    private Router router;
+    private final Router router;
 
     private String id = null;
 
-    public EatPresenter(Router router) {
+    public EatPresenter(final Router router) {
         this.router = router;
     }
 
@@ -38,7 +38,7 @@ public class EatPresenter extends MvpPresenter<EatView> {
         getEatListFromDB(id);
     }
 
-    public void getEatListFromDB(String id) {
+    public void getEatListFromDB(final String id) {
         getViewState().setFoodList(App.getDBRepository().getFoodList(id));
     }
 
@@ -46,12 +46,12 @@ public class EatPresenter extends MvpPresenter<EatView> {
         router.exit();
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         EventBus.getDefault().post(new TitleEvent(title));
     }
 
-    public void navigateToDetail(String id) {
-        Bundle args = new Bundle();
+    public void navigateToDetail(final String id) {
+        final Bundle args = new Bundle();
         args.putString(Constants.BundleKeys.ID_KEY, id);
         router.navigateTo(Screen.DETAIL.name(), args);
     }

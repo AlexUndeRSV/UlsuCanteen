@@ -9,7 +9,7 @@ import ru.terrakok.cicerone.Router;
  * Created by terrakok 27.11.16
  */
 public class LocalCiceroneHolder {
-    private HashMap<String, Cicerone<Router>> containers;
+    private final HashMap<String, Cicerone<Router>> containers;
 
     public LocalCiceroneHolder() {
         containers = new HashMap<>();

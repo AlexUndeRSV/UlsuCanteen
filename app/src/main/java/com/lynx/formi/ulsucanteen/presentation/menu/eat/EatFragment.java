@@ -15,6 +15,8 @@ import com.lynx.formi.ulsucanteen.domain.dataclass.Food;
 import com.lynx.formi.ulsucanteen.other.Constants;
 import com.lynx.formi.ulsucanteen.other.itemdecorators.LinearItemDecorator;
 import com.lynx.formi.ulsucanteen.other.utils.BackButtonListener;
+import com.lynx.formi.ulsucanteen.other.utils.OnButtonAddClickListener;
+import com.lynx.formi.ulsucanteen.other.utils.OnListItemClickListener;
 import com.lynx.formi.ulsucanteen.other.utils.RouterProvider;
 import com.lynx.formi.ulsucanteen.other.utils.TitleProvider;
 import com.lynx.formi.ulsucanteen.presentation.adding.AddingDialogFragment;
@@ -22,7 +24,7 @@ import com.lynx.formi.ulsucanteen.presentation.menu.eat.adapter.EatAdapter;
 
 import java.util.List;
 
-public class EatFragment extends MvpAppCompatFragment implements EatView, EatAdapter.EatClickListener, BackButtonListener {
+public class EatFragment extends MvpAppCompatFragment implements EatView, OnListItemClickListener, OnButtonAddClickListener, BackButtonListener {
     public static final String TAG = "EatFragment";
     @InjectPresenter
     EatPresenter presenter;
@@ -80,7 +82,8 @@ public class EatFragment extends MvpAppCompatFragment implements EatView, EatAda
         recView.addItemDecoration(new LinearItemDecorator(30));
 
         adapter = new EatAdapter(getActivity());
-        adapter.setEatClickListener(this);
+        adapter.setOnButtonAddClickListener(this);
+        adapter.setOnListItemClickListener(this);
 
         presenter.showToolbarAndBNV();
 
@@ -88,32 +91,32 @@ public class EatFragment extends MvpAppCompatFragment implements EatView, EatAda
     }
 
     @Override
-    public void setFoodList(List<Food> foodList) {
+    public void setFoodList(final List<Food> foodList) {
         this.foodList = foodList;
         adapter.setFoodList(foodList);
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onButtonAddClickListener(int position) {
-        Bundle args = new Bundle();
-        Food food = foodList.get(position);
+    public boolean onBackPressed() {
+        presenter.onBackButtonPressed();
+        return true;
+    }
+
+    @Override
+    public void onAddClick(final int position) {
+        final Bundle args = new Bundle();
+        final Food food = foodList.get(position);
         args.putParcelable(Constants.BundleKeys.EAT_KEY, food);
 
-        AddingDialogFragment addingDialogFragment = AddingDialogFragment.newInstance(args);
+        final AddingDialogFragment addingDialogFragment = AddingDialogFragment.newInstance(args);
         addingDialogFragment.setCancelable(false);
         addingDialogFragment.show(getActivity().getSupportFragmentManager(), TAG);
     }
 
     @Override
-    public void onItemClickListener(int position) {
-        Food food = foodList.get(position);
+    public void onItemClick(int position) {
+        final Food food = foodList.get(position);
         presenter.navigateToDetail(food.id);
-    }
-
-    @Override
-    public boolean onBackPressed() {
-        presenter.onBackButtonPressed();
-        return true;
     }
 }

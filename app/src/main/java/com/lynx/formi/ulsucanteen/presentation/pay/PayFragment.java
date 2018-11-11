@@ -6,21 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.lynx.formi.ulsucanteen.other.events.HideBottomNavigationEvent;
-import com.lynx.formi.ulsucanteen.other.events.HideClearLootItemEvent;
+import com.lynx.formi.ulsucanteen.R;
+import com.lynx.formi.ulsucanteen.domain.dataclass.Order;
+import com.lynx.formi.ulsucanteen.other.events.HideLoaderEvent;
+import com.lynx.formi.ulsucanteen.other.events.ShowMessageEvent;
 import com.lynx.formi.ulsucanteen.other.utils.BackButtonListener;
 import com.lynx.formi.ulsucanteen.other.utils.RouterProvider;
-import com.lynx.formi.ulsucanteen.presentation.pay.PayView;
-import com.lynx.formi.ulsucanteen.presentation.pay.PayPresenter;
-
-import com.arellomobile.mvp.MvpAppCompatFragment;
-
-import com.lynx.formi.ulsucanteen.R;
-
-import com.arellomobile.mvp.presenter.InjectPresenter;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class PayFragment extends MvpAppCompatFragment implements PayView, BackButtonListener {
     public static final String TAG = "PayFragment";
@@ -31,12 +31,12 @@ public class PayFragment extends MvpAppCompatFragment implements PayView, BackBu
     private Button btnPay;
 
     @ProvidePresenter
-    PayPresenter providePayPresenter(){
+    PayPresenter providePayPresenter() {
         return new PayPresenter(((RouterProvider) getParentFragment()).getRouter());
     }
 
     public static PayFragment newInstance(Bundle args) {
-        PayFragment fragment = new PayFragment();
+        final PayFragment fragment = new PayFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,6 +55,7 @@ public class PayFragment extends MvpAppCompatFragment implements PayView, BackBu
         presenter.hideClearLootItem();
 
         btnPay = view.findViewById(R.id.btnPay);
+        btnPay.setOnClickListener((v) -> presenter.payRequest());
     }
 
     @Override
@@ -68,5 +69,13 @@ public class PayFragment extends MvpAppCompatFragment implements PayView, BackBu
     public boolean onBackPressed() {
         presenter.onBackPressed();
         return true;
+    }
+
+
+    @Override
+    public void notifyOrderAdded(String key) {
+        // TODO оповестить ползователя ключом заказа
+        EventBus.getDefault().post(new ShowMessageEvent(key));
+        EventBus.getDefault().post(new HideLoaderEvent());
     }
 }

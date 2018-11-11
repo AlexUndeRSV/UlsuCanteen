@@ -13,19 +13,16 @@ public class App extends Application {
 
     public static App INSTANCE;
 
-    private Cicerone<Router> ciceroneGlobal;
+    private final Cicerone<Router> ciceroneGlobal = Cicerone.create();
 
-    private LocalCiceroneHolder ciceroneHolder;
+    private final LocalCiceroneHolder ciceroneHolder = new LocalCiceroneHolder();
 
-    private DBRepository dbRepository;
+    private final DBRepository dbRepository = new DBRepository(this);
 
     @Override
     public void onCreate() {
         super.onCreate();
         INSTANCE = this;
-        ciceroneGlobal = Cicerone.create();
-        ciceroneHolder = new LocalCiceroneHolder();
-        dbRepository = new DBRepository(this);
     }
 
     public static LocalCiceroneHolder getCiceroneHolder(){

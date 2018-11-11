@@ -32,10 +32,10 @@ public class TabContainerFragment extends MvpAppCompatFragment implements TabCon
 
     private String containerName = null;
 
-    public static TabContainerFragment newInstance(String name) {
-        TabContainerFragment fragment = new TabContainerFragment();
+    public static TabContainerFragment newInstance(final String name) {
+        final TabContainerFragment fragment = new TabContainerFragment();
 
-        Bundle args = new Bundle();
+        final Bundle args = new Bundle();
         args.putString(Constants.BundleKeys.CONTAINER_NAME_KEY, name);
         fragment.setArguments(args);
 
@@ -105,7 +105,7 @@ public class TabContainerFragment extends MvpAppCompatFragment implements TabCon
 
     @Override
     public boolean onBackPressed() {
-        Fragment fragment = getChildFragmentManager().findFragmentById(R.id.fragment_container_local);
+        final Fragment fragment = getChildFragmentManager().findFragmentById(R.id.fragment_container_local);
         if (fragment != null
                 && fragment instanceof BackButtonListener
                 && ((BackButtonListener) fragment).onBackPressed()) {

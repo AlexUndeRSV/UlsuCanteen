@@ -100,7 +100,7 @@ public class ContainerPresenter extends MvpPresenter<ContainerView> {
         App.getGlobalRouter().exit();
     }
 
-    public void setDefaultTitle(String title) {
+    public void setDefaultTitle(final String title) {
         EventBus.getDefault().post(new TitleEvent(title));
     }
 }

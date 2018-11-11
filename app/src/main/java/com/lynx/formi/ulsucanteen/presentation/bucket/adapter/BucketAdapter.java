@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.lynx.formi.ulsucanteen.R;
 import com.lynx.formi.ulsucanteen.domain.dataclass.Food;
+import com.lynx.formi.ulsucanteen.other.utils.OnListItemClickListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -22,28 +23,27 @@ public class BucketAdapter extends RecyclerView.Adapter<BucketAdapter.LootViewHo
 
     public interface OnCountChangeListener {
         void onIncrementClick(String id, int price);
-
         void onDecrementClick(String id, int price);
-
     }
 
     private OnCountChangeListener onCountChangeListener = null;
 
-    public void setOnCountChangeListener(OnCountChangeListener onCountChangeListener) {
+    public void setOnCountChangeListener(final OnCountChangeListener onCountChangeListener) {
         this.onCountChangeListener = onCountChangeListener;
     }
 
     private Context ctx;
-    private List<Food> foodList;
+    private final List<Food> foodList;
 
     public BucketAdapter(Context ctx) {
         this.ctx = ctx;
         foodList = new ArrayList<>();
     }
 
-    public void setFoodList(List<Food> foodList) {
+    public void setFoodList(final List<Food> foodList) {
         if (foodList == null) return;
-        this.foodList = foodList;
+        this.foodList.clear();
+        this.foodList.addAll(foodList);
     }
 
     @NonNull
@@ -58,20 +58,6 @@ public class BucketAdapter extends RecyclerView.Adapter<BucketAdapter.LootViewHo
         Food food = foodList.get(position);
 
         holder.txtCount.setText(food.count);
-
-        /*if (Integer.valueOf(food.count) == 1) {
-            holder.btnDecrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_default));
-            holder.btnDecrement.setClickable(false);
-        }else if (Integer.valueOf(food.count) == 9) {
-            holder.btnIncrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_default));
-            holder.btnIncrement.setClickable(false);
-        } else{
-            holder.btnIncrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_count));
-            holder.btnIncrement.setClickable(true);
-
-            holder.btnDecrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_count));
-            holder.btnDecrement.setClickable(true);
-        }*/
 
         holder.txtTitle.setText(food.title);
         holder.txtPrice.setText(String.valueOf(Integer.valueOf(food.price) * Integer.valueOf(food.count)));
@@ -102,7 +88,7 @@ public class BucketAdapter extends RecyclerView.Adapter<BucketAdapter.LootViewHo
         });
     }
 
-    private boolean onDecrementClick(int count, ImageButton btnDecrement, ImageButton btnIncrement) {
+    private boolean onDecrementClick(final int count, final ImageButton btnDecrement, final ImageButton btnIncrement) {
         if (count < 2) {
 //            btnDecrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_default));
             btnDecrement.setClickable(false);
@@ -121,7 +107,7 @@ public class BucketAdapter extends RecyclerView.Adapter<BucketAdapter.LootViewHo
         return true;
     }
 
-    private boolean onIncrementClick(int count, ImageButton btnIncrement, ImageButton btnDecrement) {
+    private boolean onIncrementClick(final int count, final ImageButton btnIncrement, final ImageButton btnDecrement) {
         if (count > 8) {
 //            btnIncrement.setBackground(ctx.getResources().getDrawable(R.drawable.btn_style_default));
             btnIncrement.setClickable(false);

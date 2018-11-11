@@ -13,32 +13,30 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.lynx.formi.ulsucanteen.R;
 import com.lynx.formi.ulsucanteen.domain.dataclass.Category;
+import com.lynx.formi.ulsucanteen.other.utils.OnListItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
-    public interface OnCategoryClickListener{
-        void onCategoryClick(String id, String title);
+    private OnListItemClickListener onListItemClickListener = null;
+
+    public void setOnListItemClickListener(final OnListItemClickListener onListItemClickListener) {
+        this.onListItemClickListener = onListItemClickListener;
     }
 
-    private OnCategoryClickListener onCategoryClickListener;
-
-    public void setOnCategoryClickListener(OnCategoryClickListener onCategoryClickListener) {
-        this.onCategoryClickListener = onCategoryClickListener;
-    }
-
-    private Context ctx;
-    private List<Category> categoryList;
+    private final Context ctx;
+    private final List<Category> categoryList;
 
     public CategoryAdapter(Context ctx){
         this.ctx = ctx;
         this.categoryList = new ArrayList<>();
     }
 
-    public void setCategoryList(List<Category> categoryList) {
-        this.categoryList = categoryList;
+    public void setCategoryList(final List<Category> categoryList) {
+        this.categoryList.clear();
+        this.categoryList.addAll(categoryList);
     }
 
     @NonNull
@@ -74,11 +72,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             txtTitle = itemView.findViewById(R.id.txtTitle);
 
             itemView.setOnClickListener((v)->{
-                if(onCategoryClickListener != null) {
+                if(onListItemClickListener != null) {
                     int position = getAdapterPosition();
                     if(position != RecyclerView.NO_POSITION) {
-                        Category category = categoryList.get(position);
-                        onCategoryClickListener.onCategoryClick(category.getId(), category.getTitle());
+                        onListItemClickListener.onItemClick(position);
                     }
                 }
             });

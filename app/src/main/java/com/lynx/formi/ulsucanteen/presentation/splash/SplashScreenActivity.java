@@ -17,7 +17,7 @@ public class SplashScreenActivity extends MvpAppCompatActivity implements Splash
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(this, ContainerActivity.class);
+        final Intent intent = new Intent(this, ContainerActivity.class);
         startActivity(intent);
         finish();
     }

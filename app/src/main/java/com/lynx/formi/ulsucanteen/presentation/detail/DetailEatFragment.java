@@ -83,11 +83,11 @@ public class DetailEatFragment extends MvpAppCompatFragment implements DetailEat
     }
 
     private void goToAdd() {
-        Bundle args = new Bundle();
-        Food food = App.getDBRepository().getFoodById(id);
+        final Bundle args = new Bundle();
+        final Food food = App.getDBRepository().getFoodById(id);
         args.putParcelable(Constants.BundleKeys.EAT_KEY, food);
 
-        AddingDialogFragment addingDialogFragment = AddingDialogFragment.newInstance(args);
+        final AddingDialogFragment addingDialogFragment = AddingDialogFragment.newInstance(args);
         addingDialogFragment.setCancelable(false);
         addingDialogFragment.show(getActivity().getSupportFragmentManager(), TAG);
     }

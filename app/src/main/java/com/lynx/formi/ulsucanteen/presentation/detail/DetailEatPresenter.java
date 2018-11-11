@@ -26,7 +26,7 @@ public class DetailEatPresenter extends MvpPresenter<DetailEatView> {
         EventBus.getDefault().post(new HideToolbarEvent());
     }
 
-    public void getDate(String id) {
+    public void getDate(final String id) {
         Food food = App.getDBRepository().getFoodById(id);
         getViewState().setTitle(food.title);
         getViewState().setImage(food.imgUrl);

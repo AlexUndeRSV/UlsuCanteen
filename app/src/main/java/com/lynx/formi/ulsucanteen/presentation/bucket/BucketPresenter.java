@@ -8,7 +8,7 @@ import com.lynx.formi.ulsucanteen.other.Screen;
 import com.lynx.formi.ulsucanteen.other.events.ClearLootEvent;
 import com.lynx.formi.ulsucanteen.other.events.HideLoaderEvent;
 import com.lynx.formi.ulsucanteen.other.events.HideToolbarIcon;
-import com.lynx.formi.ulsucanteen.other.events.NewItemInLootEvent;
+import com.lynx.formi.ulsucanteen.other.events.BucketSetChangedEvent;
 import com.lynx.formi.ulsucanteen.other.events.SelectItemEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowBottomNavigationEvent;
 import com.lynx.formi.ulsucanteen.other.events.ShowClearLootItemEvent;
@@ -24,7 +24,7 @@ import ru.terrakok.cicerone.Router;
 
 @InjectViewState
 public class BucketPresenter extends MvpPresenter<BucketView> {
-    private Router router;
+    private final Router router;
 
     // TODO Костыль - мокси запускает последний метод в IView при пересоздании
     private BucketFragment view;
@@ -39,7 +39,7 @@ public class BucketPresenter extends MvpPresenter<BucketView> {
         getLootList();
     }
 
-    public void onCreate(BucketFragment view){
+    public void onCreate(final BucketFragment view){
         this.view = view;
     }
 
@@ -53,7 +53,7 @@ public class BucketPresenter extends MvpPresenter<BucketView> {
         EventBus.getDefault().post(new HideLoaderEvent());
     }
 
-    public void deleteItem(int position, Food food) {
+    public void deleteItem(final int position, final Food food) {
         EventBus.getDefault().post(new ShowLoaderEvent());
         App.getDBRepository().deleteFromBucket(food.id);
 //        getViewState().notifyItemDeleted(food.title, position);
@@ -64,6 +64,8 @@ public class BucketPresenter extends MvpPresenter<BucketView> {
 
     public void onStart() {
         EventBus.getDefault().register(this);
+        // TODO Костыль - не работает через EventBus :(
+        getViewState().setLootList(App.getDBRepository().getBucketFoodList());
     }
 
     public void onStop() {
@@ -71,7 +73,7 @@ public class BucketPresenter extends MvpPresenter<BucketView> {
     }
 
     @Subscribe
-    public void onNotifyLoot(NewItemInLootEvent event) {
+    public void onNotifyLoot(BucketSetChangedEvent event) {
         getViewState().setLootList(App.getDBRepository().getBucketFoodList());
     }
 
@@ -111,13 +113,13 @@ public class BucketPresenter extends MvpPresenter<BucketView> {
         EventBus.getDefault().post(new ShowClearLootItemEvent());
     }
 
-    public void incrementDatabaseCount(String id) {
+    public void incrementDatabaseCount(final String id) {
         EventBus.getDefault().post(new ShowLoaderEvent());
         App.getDBRepository().incrementCount(id);
         EventBus.getDefault().post(new HideLoaderEvent());
     }
 
-    public void decrementDatabaseCount(String id) {
+    public void decrementDatabaseCount(final String id) {
         EventBus.getDefault().post(new ShowLoaderEvent());
         App.getDBRepository().decrementCount(id);
         EventBus.getDefault().post(new HideLoaderEvent());

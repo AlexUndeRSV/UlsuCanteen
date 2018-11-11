@@ -15,13 +15,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.lynx.formi.ulsucanteen.R;
 import com.lynx.formi.ulsucanteen.domain.dataclass.Category;
 import com.lynx.formi.ulsucanteen.other.itemdecorators.GridItemDecorator;
+import com.lynx.formi.ulsucanteen.other.utils.OnListItemClickListener;
 import com.lynx.formi.ulsucanteen.other.utils.RouterProvider;
 import com.lynx.formi.ulsucanteen.other.utils.TitleProvider;
 import com.lynx.formi.ulsucanteen.presentation.menu.categories.adapter.CategoryAdapter;
 
 import java.util.List;
 
-public class CategoriesFragment extends MvpAppCompatFragment implements CategoriesView, CategoryAdapter.OnCategoryClickListener, TitleProvider {
+public class CategoriesFragment extends MvpAppCompatFragment implements CategoriesView, OnListItemClickListener, TitleProvider {
     public static final String TAG = "CategoriesFragment";
     private final String TITLE = "Меню";
     @InjectPresenter
@@ -64,7 +65,7 @@ public class CategoriesFragment extends MvpAppCompatFragment implements Categori
                 20));
 
         adapter = new CategoryAdapter(getActivity());
-        adapter.setOnCategoryClickListener(this);
+        adapter.setOnListItemClickListener(this);
         recView.setAdapter(adapter);
 
         boolean isNeedLoad = false;
@@ -82,19 +83,20 @@ public class CategoriesFragment extends MvpAppCompatFragment implements Categori
 
 
     @Override
-    public void setCategories(List<Category> categoryList) {
+    public void setCategories(final List<Category> categoryList) {
         this.categoryList = categoryList;
         adapter.setCategoryList(categoryList);
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onCategoryClick(String id, String title) {
-        presenter.navigateToEatFragment(id, title);
+    public String getTitle() {
+        return TITLE;
     }
 
     @Override
-    public String getTitle() {
-        return TITLE;
+    public void onItemClick(final int position) {
+        Category category = categoryList.get(position);
+        presenter.navigateToEatFragment(category.getId(), category.getTitle());
     }
 }

@@ -2,6 +2,8 @@ package com.lynx.formi.ulsucanteen.other;
 
 public class Constants {
 
+    private Constants(){}
+
     public static class UlsuDatabase {
 
         public static class CategoriesTable {

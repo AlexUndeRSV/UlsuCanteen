@@ -25,14 +25,14 @@ public class LocalNavigator implements Navigator {
     private final int containerId;
     private LinkedList<String> localStackCopy;
 
-    public LocalNavigator(Activity activity, FragmentManager fragmentManager, int containerId) {
+    public LocalNavigator(final Activity activity, FragmentManager fragmentManager, int containerId) {
         this.activity = activity;
         this.fragmentManager = fragmentManager;
         this.containerId = containerId;
     }
 
     @Override
-    public void applyCommand(Command command) {
+    public void applyCommand(final Command command) {
         fragmentManager.executePendingTransactions();
 
         copyStackToLocal();
@@ -48,8 +48,8 @@ public class LocalNavigator implements Navigator {
         }
     }
 
-    private void backTo(BackTo command) {
-        String key = command.getScreenKey();
+    private void backTo(final BackTo command) {
+        final String key = command.getScreenKey();
 
         if (key == null) {
             backToRoot();
@@ -71,9 +71,9 @@ public class LocalNavigator implements Navigator {
         localStackCopy.clear();
     }
 
-    private void replaceCommand(Replace command) {
+    private void replaceCommand(final Replace command) {
 
-        Fragment fragment = createFragment(command.getScreenKey(), command.getTransitionData());
+        final Fragment fragment = createFragment(command.getScreenKey(), command.getTransitionData());
 
         if (localStackCopy.size() > 0) {
             fragmentManager.popBackStack();
@@ -103,7 +103,7 @@ public class LocalNavigator implements Navigator {
         }
     }
 
-    private void forwardCommand(Forward forward) {
+    private void forwardCommand(final Forward forward) {
         fragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                 .replace(containerId, createFragment(forward.getScreenKey(), forward.getTransitionData()))
@@ -121,7 +121,7 @@ public class LocalNavigator implements Navigator {
         }
     }
 
-    protected Fragment createFragment(String screenKey, Object data){
+    protected Fragment createFragment(final String screenKey, final Object data){
         return Screen.valueOf(screenKey).create((Bundle) data);
     }
 

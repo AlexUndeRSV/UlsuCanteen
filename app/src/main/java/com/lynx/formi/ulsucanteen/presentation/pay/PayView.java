@@ -4,4 +4,5 @@ import com.arellomobile.mvp.MvpView;
 
 public interface PayView extends MvpView {
 
+    void notifyOrderAdded(String key);
 }

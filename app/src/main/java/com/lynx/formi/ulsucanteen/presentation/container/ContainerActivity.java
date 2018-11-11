@@ -16,6 +16,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.lynx.formi.ulsucanteen.App;
 import com.lynx.formi.ulsucanteen.R;
+import com.lynx.formi.ulsucanteen.domain.dataclass.Order;
 import com.lynx.formi.ulsucanteen.other.Screen;
 import com.lynx.formi.ulsucanteen.other.events.ClearLootEvent;
 import com.lynx.formi.ulsucanteen.other.router.CustomNavigator;
@@ -77,10 +78,10 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
         presenter.setDefaultTitle("Главная");
     }
 
-    private void selectTab(String tab) {
-        FragmentManager fm = getSupportFragmentManager();
+    private void selectTab(final String tab) {
+        final FragmentManager fm = getSupportFragmentManager();
         Fragment currentFragment = null;
-        List<Fragment> fragments = fm.getFragments();
+        final List<Fragment> fragments = fm.getFragments();
         if (fragments != null) {
             for (Fragment f : fragments) {
                 if (f.isVisible()) {
@@ -89,12 +90,12 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
                 }
             }
         }
-        Fragment newFragment = fm.findFragmentByTag(tab);
+        final Fragment newFragment = fm.findFragmentByTag(tab);
 
         if (currentFragment != null && newFragment != null && currentFragment == newFragment)
             return;
 
-        FragmentTransaction transaction = fm.beginTransaction();
+        final FragmentTransaction transaction = fm.beginTransaction();
         if (newFragment == null) {
             transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
             transaction.add(R.id.fragment_container, TabContainerFragment.newInstance(tab), tab);
@@ -120,7 +121,7 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
     }
 
 
-    private CustomNavigator navigator = new CustomNavigator(getSupportFragmentManager(), R.id.fragment_container, null) {
+    private final CustomNavigator navigator = new CustomNavigator(getSupportFragmentManager(), R.id.fragment_container, null) {
         @Override
         protected Fragment createFragment(String screenKey, Object data) {
             return Screen.valueOf(screenKey).create((Bundle) data);
@@ -177,9 +178,9 @@ public class ContainerActivity extends MvpAppCompatActivity implements Container
     @Override
     public void onBackPressed() {
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = null;
-        List<Fragment> fragments = fragmentManager.getFragments();
+        final List<Fragment> fragments = fragmentManager.getFragments();
 
         if (fragments != null) {
             for (Fragment f : fragments) {

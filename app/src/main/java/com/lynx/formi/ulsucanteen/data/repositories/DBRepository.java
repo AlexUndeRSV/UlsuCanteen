@@ -20,14 +20,14 @@ public class DBRepository {
     private static final String DB_NAME = "eat_db";
     private static final int DB_VERSION = 8;
 
-    private DbHelper dbHelper;
+    private final DbHelper dbHelper;
 
     public DBRepository(Context ctx) {
         dbHelper = new DbHelper(ctx, DB_NAME, null, DB_VERSION);
     }
 
     public List<Category> getCategoryList() {
-        List<Category> categoryList = new ArrayList<>();
+        final List<Category> categoryList = new ArrayList<>();
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + CategoriesTable.TABLE_NAME, null);
@@ -49,10 +49,10 @@ public class DBRepository {
     }
 
     public List<Food> getFoodList(String categoryId) {
-        List<Food> foodList = new ArrayList<>();
+        final List<Food> foodList = new ArrayList<>();
 
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + EatTable.TABLE_NAME + " WHERE " + EatTable.Columns.COLUMN_CATEGORY_ID + "=" + categoryId, null);
+        final SQLiteDatabase db = dbHelper.getReadableDatabase();
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + EatTable.TABLE_NAME + " WHERE " + EatTable.Columns.COLUMN_CATEGORY_ID + "=" + categoryId, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -86,8 +86,8 @@ public class DBRepository {
         db.close();
     }*/
 
-    public void saveFoodList(List<Food> foodList) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+    public void saveFoodList(final List<Food> foodList) {
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         db.beginTransaction();
 
@@ -95,7 +95,7 @@ public class DBRepository {
         db.execSQL(String.format("DELETE FROM " + EatTable.TABLE_NAME + " WHERE " + EatTable.Columns.COLUMN_ID + " NOT IN (%s)", toIds(foodList)) + ";");
 
         // update
-        ContentValues cv = new ContentValues();
+        final ContentValues cv = new ContentValues();
         for (int i = 0; i < foodList.size(); i++) {
             cv.put(EatTable.Columns.COLUMN_TITLE, foodList.get(i).title);
             cv.put(EatTable.Columns.COLUMN_ID, foodList.get(i).id);
@@ -107,7 +107,7 @@ public class DBRepository {
         }
 
         //insert or ignore
-        StringBuilder values = new StringBuilder();
+        final StringBuilder values = new StringBuilder();
 
         for (int i = 0; i < foodList.size(); i++) {
             if (i != 0) values.append(",");
@@ -136,8 +136,8 @@ public class DBRepository {
         db.close();
     }
 
-    private String toIds(List<Food> foodList) {
-        StringBuilder sb = new StringBuilder();
+    private String toIds(final List<Food> foodList) {
+        final StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < foodList.size(); i++) {
             if (i != 0) sb.append(",");
@@ -149,10 +149,10 @@ public class DBRepository {
     }
 
     public List<Food> getBucketFoodList() {
-        List<Food> foodList = new ArrayList<>();
+        final List<Food> foodList = new ArrayList<>();
 
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + BucketTable.TABLE_NAME, null);
+        final SQLiteDatabase db = dbHelper.getReadableDatabase();
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + BucketTable.TABLE_NAME, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -175,14 +175,14 @@ public class DBRepository {
     }
 
     public boolean addFoodToBucket(Food food) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         int bufCount;
         String id = null;
 
         boolean isMax = false;
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + BucketTable.TABLE_NAME + " WHERE " + BucketTable.Columns.COLUMN_ID + "=" + food.id, null);
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + BucketTable.TABLE_NAME + " WHERE " + BucketTable.Columns.COLUMN_ID + "=" + food.id, null);
 
         if (cursor.moveToFirst()) {
             if(Integer.valueOf(cursor.getString(cursor.getColumnIndex(BucketTable.Columns.COLUMN_COUNT))) > 8){
@@ -217,7 +217,7 @@ public class DBRepository {
         return isMax;
     }
 
-    public void deleteFromBucket(String id) {
+    public void deleteFromBucket(final String id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         db.delete(BucketTable.TABLE_NAME, BucketTable.Columns.COLUMN_ID + " = ?", new String[]{id});
@@ -225,11 +225,11 @@ public class DBRepository {
         db.close();
     }
 
-    public Food getFoodById(String id) {
-        Food food = new Food();
+    public Food getFoodById(final String id) {
+        final Food food = new Food();
 
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + EatTable.TABLE_NAME + " WHERE " + EatTable.Columns.COLUMN_ID + " = ?", new String[]{id});
+        final SQLiteDatabase db = dbHelper.getReadableDatabase();
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + EatTable.TABLE_NAME + " WHERE " + EatTable.Columns.COLUMN_ID + " = ?", new String[]{id});
 
         if (cursor.moveToFirst()) {
             do {
@@ -251,8 +251,8 @@ public class DBRepository {
     public int getTotalBucketPrice() {
         int totalPrice = 0;
 
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + BucketTable.TABLE_NAME, null);
+        final SQLiteDatabase db = dbHelper.getReadableDatabase();
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + BucketTable.TABLE_NAME, null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -267,47 +267,55 @@ public class DBRepository {
     }
 
     public void clearLootTable() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        final SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         db.delete(BucketTable.TABLE_NAME, null, null);
 
         db.close();
     }
 
-    public void incrementCount(String id) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+    public void incrementCount(final String id) {
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         int count = 0;
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + BucketTable.TABLE_NAME + " WHERE " + BucketTable.Columns.COLUMN_ID + "=" + id, null);
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + BucketTable.TABLE_NAME + " WHERE " + BucketTable.Columns.COLUMN_ID + "=" + id, null);
 
 
         if (cursor.moveToFirst()) {
             count = Integer.valueOf(cursor.getString(cursor.getColumnIndex(BucketTable.Columns.COLUMN_COUNT)));
         }
 
-        ContentValues cv = new ContentValues();
+        final ContentValues cv = new ContentValues();
         cv.put(BucketTable.Columns.COLUMN_COUNT, String.valueOf(count + 1));
         db.update(BucketTable.TABLE_NAME, cv, BucketTable.Columns.COLUMN_ID + "=" + id, null);
 
         db.close();
     }
 
-    public void decrementCount(String id) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+    public void decrementCount(final String id) {
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         int count = 0;
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + BucketTable.TABLE_NAME + " WHERE " + BucketTable.Columns.COLUMN_ID + "=" + id, null);
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + BucketTable.TABLE_NAME + " WHERE " + BucketTable.Columns.COLUMN_ID + "=" + id, null);
 
 
         if (cursor.moveToFirst()) {
             count = Integer.valueOf(cursor.getString(cursor.getColumnIndex(BucketTable.Columns.COLUMN_COUNT)));
         }
 
-        ContentValues cv = new ContentValues();
+        final ContentValues cv = new ContentValues();
         cv.put(BucketTable.Columns.COLUMN_COUNT, String.valueOf(count - 1));
         db.update(BucketTable.TABLE_NAME, cv, BucketTable.Columns.COLUMN_ID + "=" + id, null);
+
+        db.close();
+    }
+
+    public void deleteBucket() {
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        db.delete(BucketTable.TABLE_NAME, null, null);
 
         db.close();
     }
