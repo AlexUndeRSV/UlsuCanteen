@@ -5,8 +5,8 @@ import java.util.Random;
 public class RandomUtils {
 
     public static String generateRandomKey() {
-        StringBuilder result = new StringBuilder();
-        Random random = new Random();
+        final StringBuilder result = new StringBuilder();
+        final Random random = new Random();
 
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXY0123456789";
 

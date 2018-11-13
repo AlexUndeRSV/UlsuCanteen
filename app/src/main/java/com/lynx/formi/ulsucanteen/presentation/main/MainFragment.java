@@ -25,8 +25,8 @@ public class MainFragment extends MvpAppCompatFragment implements MainView, Titl
     MainPresenter presenter;
 
 
-    public static MainFragment newInstance(Bundle args) {
-        MainFragment fragment = new MainFragment();
+    public static MainFragment newInstance(final Bundle args) {
+        final MainFragment fragment = new MainFragment();
         fragment.setArguments(args);
         return fragment;
     }

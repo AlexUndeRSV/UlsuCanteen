@@ -119,7 +119,6 @@ public class AddingDialogFragment extends DialogFragment implements AddingDialog
 
     private void onMinusClick(){
         if (count < 2) {
-//            btnMinus.setBackgroundColor(getActivity().getResources().getColor(R.color.gray));
             btnMinus.setClickable(false);
             return;
         }
@@ -130,12 +129,10 @@ public class AddingDialogFragment extends DialogFragment implements AddingDialog
             totalPrice = singlePrice * count;
             txtPrice.setText(String.valueOf(totalPrice));
 
-//            btnMinus.setBackgroundColor(getActivity().getResources().getColor(R.color.gray));
             btnMinus.setClickable(false);
             return;
         }
 
-//        btnPlus.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
         btnPlus.setClickable(true);
         count--;
         txtCount.setText(String.valueOf(count));

@@ -15,9 +15,9 @@ import ru.terrakok.cicerone.Router;
 @InjectViewState
 public class DetailEatPresenter extends MvpPresenter<DetailEatView> {
 
-    private Router router;
+    private final Router router;
 
-    public DetailEatPresenter(Router router) {
+    public DetailEatPresenter(final Router router) {
         this.router = router;
     }
 
@@ -27,7 +27,7 @@ public class DetailEatPresenter extends MvpPresenter<DetailEatView> {
     }
 
     public void getDate(final String id) {
-        Food food = App.getDBRepository().getFoodById(id);
+        final Food food = App.getDBRepository().getFoodById(id);
         getViewState().setTitle(food.title);
         getViewState().setImage(food.imgUrl);
         getViewState().setDescription(food.description);

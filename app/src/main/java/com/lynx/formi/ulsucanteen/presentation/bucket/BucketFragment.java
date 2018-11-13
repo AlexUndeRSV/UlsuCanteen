@@ -16,6 +16,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.lynx.formi.ulsucanteen.domain.dataclass.Food;
 import com.lynx.formi.ulsucanteen.other.events.HideLoaderEvent;
 import com.lynx.formi.ulsucanteen.other.itemdecorators.LinearItemDecorator;
+import com.lynx.formi.ulsucanteen.other.utils.OnCountChangeListener;
 import com.lynx.formi.ulsucanteen.other.utils.RouterProvider;
 import com.lynx.formi.ulsucanteen.other.utils.TitleProvider;
 
@@ -30,7 +31,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-public class BucketFragment extends MvpAppCompatFragment implements BucketView, TitleProvider, BucketAdapter.OnCountChangeListener {
+public class BucketFragment extends MvpAppCompatFragment implements BucketView, TitleProvider, OnCountChangeListener {
     public static final String TAG = "BucketFragment";
     private final String TITLE = "Корзина";
     @InjectPresenter
@@ -55,14 +56,14 @@ public class BucketFragment extends MvpAppCompatFragment implements BucketView, 
     private String totalPriceText;
 
 
-    public static BucketFragment newInstance(Bundle args) {
+    public static BucketFragment newInstance(final Bundle args) {
         BucketFragment fragment = new BucketFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter.onCreate(this);
     }
@@ -184,7 +185,7 @@ public class BucketFragment extends MvpAppCompatFragment implements BucketView, 
 
     @Override
     public void requestForClear() {
-        AlertDialog.Builder ab = new AlertDialog.Builder(getActivity())
+        final AlertDialog.Builder ab = new AlertDialog.Builder(getActivity())
                 .setTitle("Подтверждение действия")
                 .setMessage("Вы действительно хотите очистить корзину?")
                 .setPositiveButton("Да", (dialog, which) -> {
@@ -195,7 +196,7 @@ public class BucketFragment extends MvpAppCompatFragment implements BucketView, 
                     dialog.dismiss();
                 }))
                 .setCancelable(false);
-        AlertDialog alertDialog = ab.create();
+        final AlertDialog alertDialog = ab.create();
         alertDialog.setOnShowListener(dialog -> {
             alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(android.R.color.black));
             alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(android.R.color.black));

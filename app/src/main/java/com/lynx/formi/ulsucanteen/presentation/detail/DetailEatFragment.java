@@ -42,11 +42,11 @@ public class DetailEatFragment extends MvpAppCompatFragment implements DetailEat
     private String id;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            Bundle args = getArguments();
+            final Bundle args = getArguments();
 
             id = args.getString(Constants.BundleKeys.ID_KEY);
         }
@@ -54,8 +54,8 @@ public class DetailEatFragment extends MvpAppCompatFragment implements DetailEat
         presenter.getDate(id);
     }
 
-    public static DetailEatFragment newInstance(Bundle args) {
-        DetailEatFragment fragment = new DetailEatFragment();
+    public static DetailEatFragment newInstance(final Bundle args) {
+        final DetailEatFragment fragment = new DetailEatFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -93,17 +93,17 @@ public class DetailEatFragment extends MvpAppCompatFragment implements DetailEat
     }
 
     @Override
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         collapsingToolbar.setTitle(title);
     }
 
     @Override
-    public void setImage(String imageUrl) {
+    public void setImage(final String imageUrl) {
         Picasso.with(getActivity()).load(imageUrl).into(collapsingImage);
     }
 
     @Override
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         txtDescription.setText(description);
     }
 

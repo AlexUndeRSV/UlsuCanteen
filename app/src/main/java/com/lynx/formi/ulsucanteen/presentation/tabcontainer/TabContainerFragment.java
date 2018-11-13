@@ -43,7 +43,7 @@ public class TabContainerFragment extends MvpAppCompatFragment implements TabCon
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if(getArguments() != null){

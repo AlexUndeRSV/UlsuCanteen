@@ -41,8 +41,8 @@ public class CategoriesFragment extends MvpAppCompatFragment implements Categori
     private DatabaseReference dbReference;
 
 
-    public static CategoriesFragment newInstance(Bundle args) {
-        CategoriesFragment fragment = new CategoriesFragment();
+    public static CategoriesFragment newInstance(final Bundle args) {
+        final CategoriesFragment fragment = new CategoriesFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -96,7 +96,7 @@ public class CategoriesFragment extends MvpAppCompatFragment implements Categori
 
     @Override
     public void onItemClick(final int position) {
-        Category category = categoryList.get(position);
+        final Category category = categoryList.get(position);
         presenter.navigateToEatFragment(category.getId(), category.getTitle());
     }
 }

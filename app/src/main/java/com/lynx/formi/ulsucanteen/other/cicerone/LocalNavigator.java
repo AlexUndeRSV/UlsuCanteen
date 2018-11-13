@@ -79,7 +79,7 @@ public class LocalNavigator implements Navigator {
             fragmentManager.popBackStack();
             localStackCopy.removeLast();
 
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction
                     .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right)
                     .replace(containerId, fragment)
@@ -88,7 +88,7 @@ public class LocalNavigator implements Navigator {
             localStackCopy.add(command.getScreenKey());
 
         } else {
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
             fragmentTransaction
                     .replace(containerId, fragment)

@@ -42,13 +42,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item, parent, false);
         return new CategoryViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-        Category category = categoryList.get(position);
+        final Category category = categoryList.get(position);
 
         holder.txtTitle.setText(category.getTitle());
         Glide.with(ctx).load(category.getImgUrl()).into(holder.imgPhoto);

@@ -35,7 +35,7 @@ public class PayFragment extends MvpAppCompatFragment implements PayView, BackBu
         return new PayPresenter(((RouterProvider) getParentFragment()).getRouter());
     }
 
-    public static PayFragment newInstance(Bundle args) {
+    public static PayFragment newInstance(final Bundle args) {
         final PayFragment fragment = new PayFragment();
         fragment.setArguments(args);
         return fragment;
@@ -73,7 +73,7 @@ public class PayFragment extends MvpAppCompatFragment implements PayView, BackBu
 
 
     @Override
-    public void notifyOrderAdded(String key) {
+    public void notifyOrderAdded(final String key) {
         // TODO оповестить ползователя ключом заказа
         EventBus.getDefault().post(new ShowMessageEvent(key));
         EventBus.getDefault().post(new HideLoaderEvent());

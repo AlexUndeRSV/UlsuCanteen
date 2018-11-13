@@ -29,12 +29,12 @@ public class DBRepository {
     public List<Category> getCategoryList() {
         final List<Category> categoryList = new ArrayList<>();
 
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + CategoriesTable.TABLE_NAME, null);
+        final SQLiteDatabase db = dbHelper.getReadableDatabase();
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + CategoriesTable.TABLE_NAME, null);
 
         if (cursor.moveToFirst()) {
             do {
-                Category category = new Category();
+                final Category category = new Category();
                 category.setTitle(cursor.getString(cursor.getColumnIndex(CategoriesTable.Columns.COLUMN_TITLE)));
                 category.setImgUrl(cursor.getString(cursor.getColumnIndex(CategoriesTable.Columns.COLUMN_IMG_URL)));
                 category.setId(cursor.getString(cursor.getColumnIndex(CategoriesTable.Columns.COLUMN_ID)));
@@ -48,7 +48,7 @@ public class DBRepository {
         return categoryList;
     }
 
-    public List<Food> getFoodList(String categoryId) {
+    public List<Food> getFoodList(final String categoryId) {
         final List<Food> foodList = new ArrayList<>();
 
         final SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -56,7 +56,7 @@ public class DBRepository {
 
         if (cursor.moveToFirst()) {
             do {
-                Food food = new Food();
+                final Food food = new Food();
                 food.title = cursor.getString(cursor.getColumnIndex(EatTable.Columns.COLUMN_TITLE));
                 food.imgUrl = cursor.getString(cursor.getColumnIndex(EatTable.Columns.COLUMN_IMG_URL));
                 food.id = cursor.getString(cursor.getColumnIndex(EatTable.Columns.COLUMN_ID));
@@ -156,7 +156,7 @@ public class DBRepository {
 
         if (cursor.moveToFirst()) {
             do {
-                Food food = new Food();
+                final Food food = new Food();
                 food.title = cursor.getString(cursor.getColumnIndex(BucketTable.Columns.COLUMN_TITLE));
                 food.imgUrl = cursor.getString(cursor.getColumnIndex(BucketTable.Columns.COLUMN_IMG_URL));
                 food.id = cursor.getString(cursor.getColumnIndex(BucketTable.Columns.COLUMN_ID));
@@ -174,7 +174,7 @@ public class DBRepository {
         return foodList;
     }
 
-    public boolean addFoodToBucket(Food food) {
+    public boolean addFoodToBucket(final Food food) {
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         int bufCount;
@@ -218,7 +218,7 @@ public class DBRepository {
     }
 
     public void deleteFromBucket(final String id) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         db.delete(BucketTable.TABLE_NAME, BucketTable.Columns.COLUMN_ID + " = ?", new String[]{id});
 

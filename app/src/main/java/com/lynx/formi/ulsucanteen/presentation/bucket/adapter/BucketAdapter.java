@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.lynx.formi.ulsucanteen.R;
 import com.lynx.formi.ulsucanteen.domain.dataclass.Food;
+import com.lynx.formi.ulsucanteen.other.utils.OnCountChangeListener;
 import com.lynx.formi.ulsucanteen.other.utils.OnListItemClickListener;
 import com.squareup.picasso.Picasso;
 
@@ -21,18 +22,13 @@ import java.util.List;
 
 public class BucketAdapter extends RecyclerView.Adapter<BucketAdapter.LootViewHolder> {
 
-    public interface OnCountChangeListener {
-        void onIncrementClick(String id, int price);
-        void onDecrementClick(String id, int price);
-    }
-
     private OnCountChangeListener onCountChangeListener = null;
 
     public void setOnCountChangeListener(final OnCountChangeListener onCountChangeListener) {
         this.onCountChangeListener = onCountChangeListener;
     }
 
-    private Context ctx;
+    private final Context ctx;
     private final List<Food> foodList;
 
     public BucketAdapter(Context ctx) {

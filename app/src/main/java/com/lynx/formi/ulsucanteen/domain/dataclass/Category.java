@@ -15,12 +15,6 @@ public class Category implements Parcelable{
     public Category() {
     }
 
-    public Category(String imgUrl, String title, String id) {
-        this.imgUrl = imgUrl;
-        this.title = title;
-        this.id = id;
-    }
-
     private Category(Parcel in) {
         imgUrl = in.readString();
         title = in.readString();

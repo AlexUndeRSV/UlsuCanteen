@@ -15,7 +15,7 @@ public class LocalCiceroneHolder {
         containers = new HashMap<>();
     }
 
-    public Cicerone<Router> getCicerone(String containerTag) {
+    public Cicerone<Router> getCicerone(final String containerTag) {
         if (!containers.containsKey(containerTag)) {
             containers.put(containerTag, Cicerone.create());
         }

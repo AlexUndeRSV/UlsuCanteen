@@ -19,7 +19,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(BucketTable.Queries.CREATE_TABLE);
     }
 
-    // TODO Сделать миграцию перед релизом
+    // TODO Migration
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(CategoriesTable.Queries.DROP_TABLE);

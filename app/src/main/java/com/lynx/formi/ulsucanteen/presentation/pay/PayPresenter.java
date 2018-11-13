@@ -65,7 +65,7 @@ public class PayPresenter extends MvpPresenter<PayView> {
 
         dbReference.child("orders").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 final String generatedRandomKey = RandomUtils.generateRandomKey();
 
                 if (!dataSnapshot.child(generatedRandomKey).exists()) {
@@ -78,7 +78,7 @@ public class PayPresenter extends MvpPresenter<PayView> {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull final DatabaseError databaseError) {
                 // TODO обработать ошибку
                 EventBus.getDefault().post(new ShowMessageEvent(databaseError.getMessage()));
             }
