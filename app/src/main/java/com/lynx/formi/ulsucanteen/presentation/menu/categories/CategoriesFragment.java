@@ -1,6 +1,7 @@
 package com.lynx.formi.ulsucanteen.presentation.menu.categories;
 
 import android.os.Bundle;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,8 +19,11 @@ import com.lynx.formi.ulsucanteen.other.itemdecorators.GridItemDecorator;
 import com.lynx.formi.ulsucanteen.other.utils.OnListItemClickListener;
 import com.lynx.formi.ulsucanteen.other.utils.RouterProvider;
 import com.lynx.formi.ulsucanteen.other.utils.TitleProvider;
+import com.lynx.formi.ulsucanteen.other.utils.diffutils.BaseDiffUtilCallback;
+import com.lynx.formi.ulsucanteen.other.utils.diffutils.CategoriesDiffUtilCallback;
 import com.lynx.formi.ulsucanteen.presentation.menu.categories.adapter.CategoryAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriesFragment extends MvpAppCompatFragment implements CategoriesView, OnListItemClickListener, TitleProvider {
@@ -84,9 +88,14 @@ public class CategoriesFragment extends MvpAppCompatFragment implements Categori
 
     @Override
     public void setCategories(final List<Category> categoryList) {
+
         this.categoryList = categoryList;
+
+        final BaseDiffUtilCallback<Category> callback = new CategoriesDiffUtilCallback<>(adapter.getCategoryList(), categoryList);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback, false);
+
         adapter.setCategoryList(categoryList);
-        adapter.notifyDataSetChanged();
+        diffResult.dispatchUpdatesTo(adapter);
     }
 
     @Override

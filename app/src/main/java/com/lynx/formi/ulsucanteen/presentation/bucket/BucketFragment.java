@@ -3,6 +3,7 @@ package com.lynx.formi.ulsucanteen.presentation.bucket;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -25,6 +26,8 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.lynx.formi.ulsucanteen.R;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.lynx.formi.ulsucanteen.other.utils.diffutils.BaseDiffUtilCallback;
+import com.lynx.formi.ulsucanteen.other.utils.diffutils.FoodDiffUtilCallback;
 import com.lynx.formi.ulsucanteen.presentation.bucket.adapter.BucketAdapter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -212,9 +215,15 @@ public class BucketFragment extends MvpAppCompatFragment implements BucketView, 
 
     @Override
     public void setLootList(final List<Food> foodList) {
+
         this.foodList = foodList;
+
+        final BaseDiffUtilCallback<Food> callback = new FoodDiffUtilCallback<>(adapter.getLootList(), foodList);
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback);
+
         adapter.setFoodList(foodList);
-        adapter.notifyDataSetChanged();
+        diffResult.dispatchUpdatesTo(adapter);
+
         if (foodList.isEmpty()) {
             emptyLoot.setVisibility(View.VISIBLE);
             recView.setVisibility(View.GONE);

@@ -126,6 +126,10 @@ public class BucketAdapter extends RecyclerView.Adapter<BucketAdapter.LootViewHo
         return foodList.size();
     }
 
+    public List<Food> getLootList() {
+        return foodList;
+    }
+
     public class LootViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imgPhoto;

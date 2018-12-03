@@ -1,6 +1,7 @@
 package com.lynx.formi.ulsucanteen.presentation.menu.eat;
 
 import android.os.Bundle;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ import com.lynx.formi.ulsucanteen.other.utils.OnButtonAddClickListener;
 import com.lynx.formi.ulsucanteen.other.utils.OnListItemClickListener;
 import com.lynx.formi.ulsucanteen.other.utils.RouterProvider;
 import com.lynx.formi.ulsucanteen.other.utils.TitleProvider;
+import com.lynx.formi.ulsucanteen.other.utils.diffutils.BaseDiffUtilCallback;
+import com.lynx.formi.ulsucanteen.other.utils.diffutils.FoodDiffUtilCallback;
 import com.lynx.formi.ulsucanteen.presentation.adding.AddingDialogFragment;
 import com.lynx.formi.ulsucanteen.presentation.menu.eat.adapter.EatAdapter;
 
@@ -93,6 +96,13 @@ public class EatFragment extends MvpAppCompatFragment implements EatView, OnList
     @Override
     public void setFoodList(final List<Food> foodList) {
         this.foodList = foodList;
+
+        final BaseDiffUtilCallback<Food> callback = new FoodDiffUtilCallback<>(adapter.getFoodList(), foodList);
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback);
+
+        adapter.setFoodList(foodList);
+        diffResult.dispatchUpdatesTo(adapter);
+
         adapter.setFoodList(foodList);
         adapter.notifyDataSetChanged();
     }

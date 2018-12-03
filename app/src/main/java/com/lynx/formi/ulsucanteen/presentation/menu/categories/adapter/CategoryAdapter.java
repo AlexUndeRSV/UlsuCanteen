@@ -60,6 +60,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return categoryList.size();
     }
 
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
     public class CategoryViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView imgPhoto;

@@ -66,6 +66,10 @@ public class EatAdapter extends RecyclerView.Adapter<EatAdapter.EatViewHolder> {
         return foodList.size();
     }
 
+    public List<Food> getFoodList() {
+        return foodList;
+    }
+
     public class EatViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imgPhoto;
